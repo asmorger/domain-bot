@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBot.Tests", "DBot.Tests\DBot.Tests.csproj", "{337C9E87-48E0-4367-9CBF-06B2A63C3B8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBot", "DBot\DBot.csproj", "{6EF7F9BB-CA87-439B-B468-212E51878311}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{337C9E87-48E0-4367-9CBF-06B2A63C3B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{337C9E87-48E0-4367-9CBF-06B2A63C3B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{337C9E87-48E0-4367-9CBF-06B2A63C3B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{337C9E87-48E0-4367-9CBF-06B2A63C3B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF7F9BB-CA87-439B-B468-212E51878311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF7F9BB-CA87-439B-B468-212E51878311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF7F9BB-CA87-439B-B468-212E51878311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF7F9BB-CA87-439B-B468-212E51878311}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
