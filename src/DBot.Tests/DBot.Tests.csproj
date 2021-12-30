@@ -26,4 +26,8 @@
       <ProjectReference Include="..\DBot\DBot.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="SampleData\Valid\*.txt" />
+    </ItemGroup>
+
 </Project>
