@@ -21,7 +21,7 @@ public static class ExpressionParser
 
     private static ExpressionTokenParser Name { get; } =
         Token.EqualTo(ExpressionToken.Name)
-            .Select(x => (Expression) new NameValue(x.ToStringValue()));
+            .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
 
     private static ExpressionTokenParser Node { get; } =
         from l in Identifier
@@ -54,7 +54,7 @@ public static class ExpressionParser
             return false;
         }
 
-        expr = result.Value!;
+        expr = result.Value;
         error = null;
         errorPosition = Position.Empty;
         return true;
