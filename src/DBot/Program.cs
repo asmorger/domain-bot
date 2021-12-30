@@ -1,2 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+using DBot;
+using Spectre.Console.Cli;
+
+var app = new CommandApp();
+app.Configure(AppCommands.Configure);
+
+return app.Run(args);
