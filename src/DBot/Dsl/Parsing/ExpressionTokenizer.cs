@@ -14,12 +14,17 @@ public static class ExpressionTokenizer
             .IgnoreMany()
         from close in Character.EqualTo('"')
         select Unit.Value;
-    
+
     private static Tokenizer<ExpressionToken> Tokenizer { get; } = new TokenizerBuilder<ExpressionToken>()
-        .Match(Character.EqualTo('{'), ExpressionToken.LBrace)
-        .Match(Character.EqualTo('}'), ExpressionToken.RBrace)
-        .Match(QuotedString, ExpressionToken.String)
-        .Match(Span.NonWhiteSpace, ExpressionToken.String)
+        .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
+        .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
+        .Match(Character.EqualTo(','), ExpressionToken.Comma)
+        .Match(Span.EqualTo("system"), ExpressionToken.System)
+        .Match(Span.EqualTo("aggregate"), ExpressionToken.Aggregate)
+        .Match(Span.EqualTo("entity"), ExpressionToken.Entity)
+        .Match(Span.EqualTo("value"), ExpressionToken.ValueObject)
+        .Match(QuotedString, ExpressionToken.Name)
+        .Match(Span.NonWhiteSpace, ExpressionToken.Name)
         .Ignore(Span.WhiteSpace)
         .Build();
     
