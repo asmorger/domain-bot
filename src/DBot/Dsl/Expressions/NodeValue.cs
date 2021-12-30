@@ -13,6 +13,8 @@ public class NodeValue : Expression
     public NameValue Name { get; init; }
     public Expression[] Children { get; init; }
 
+    public bool HasChildren => Children.Any();
+
     public override string ToString() => $"{Identifier}:{Name} with {Children.Length} items";
 }
 
