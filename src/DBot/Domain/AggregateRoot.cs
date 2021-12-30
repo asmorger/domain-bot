@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DBot.Domain;
 
 [DebuggerDisplay("Aggregate: {Name}")]
-public class AggregateRoot : HierarchicalCodeElement, IEnumerable<CodeElement>
+public class AggregateRoot : HierarchicalCodeElement
 {
     public string Name { get; }
     private readonly List<CodeElement> _elements = new();

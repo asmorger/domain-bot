@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DBot.Domain;
 
 [DebuggerDisplay("System: {Name}")]
-public class SoftwareSystem : HierarchicalCodeElement, IEnumerable<CodeElement>
+public class SoftwareSystem : HierarchicalCodeElement
 {
     public string Name { get; }
     private readonly List<CodeElement> _elements = new();
