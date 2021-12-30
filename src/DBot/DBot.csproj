@@ -12,4 +12,11 @@
       <PackageReference Include="Superpower" Version="3.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Sample.txt" />
+      <Content Include="Sample.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
