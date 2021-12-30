@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 
 namespace DBot.Domain;
 
+[DebuggerDisplay("System: {Name}")]
 public class SoftwareSystem : HierarchicalCodeElement, IEnumerable<CodeElement>
 {
     public string Name { get; }

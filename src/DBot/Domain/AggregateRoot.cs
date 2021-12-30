@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 
 namespace DBot.Domain;
 
+[DebuggerDisplay("Aggregate: {Name}")]
 public class AggregateRoot : HierarchicalCodeElement, IEnumerable<CodeElement>
 {
     public string Name { get; }
