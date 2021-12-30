@@ -1,0 +1,8 @@
+system GizmoMaker { 
+    aggregate Whatzit {
+        entity Whozit { },
+        entity Thingamajig { }
+    },
+    
+    value Dohickey { }
+}
