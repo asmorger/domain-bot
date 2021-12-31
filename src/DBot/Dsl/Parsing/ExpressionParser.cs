@@ -34,7 +34,12 @@ public static class ExpressionParser
         from values in Parse.Ref(() => Node)
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
                 end: Token.EqualTo(ExpressionToken.RBracket))
-            select (Expression) new ChildNodes(values);
+        select (Expression) new ChildNodes(values);
+    
+    private static ExpressionTokenParser Node { get; } =
+        Parse.Chain(Name, Array.Or(Identifier),
+            (name, identifier, array) =>
+                new NodeValue((IdentifierValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
     private static ExpressionTokenParser Expression = 
         Node
