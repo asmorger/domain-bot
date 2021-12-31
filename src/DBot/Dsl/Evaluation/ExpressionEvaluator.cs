@@ -19,7 +19,7 @@ public class ExpressionEvaluator
 
     static CodeElement EvaluateCodeHierarchy(NodeValue expression)
     {
-        var node = EvaluateNode(expression);
+        var node = EvaluateExpression(expression);
 
         if (!expression.HasChildren)
         {
@@ -40,15 +40,23 @@ public class ExpressionEvaluator
         return node;
     }
     
-    
-
-    static CodeElement EvaluateNode(NodeValue expression) => expression.Identifier.Value switch
+    static CodeElement EvaluateExpression(Expression expression) => expression switch
     {
-        Identifier.System => new SoftwareSystem(expression.Name.Value),
-        Identifier.AggregateRoot => new AggregateRoot(expression.Name.Value),
-        Identifier.Entity => new Entity(expression.Name.Value),
-        Identifier.ValueObject => new ValueObject(expression.Name.Value),
-        _ => throw new ArgumentException($"Unsupported expression {expression}.")
+        ListingNodeValue v => v.Identifier.Value switch {
+            Identifier.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        NodeValue v => v.Identifier.Value switch {
+            Identifier.System => new SoftwareSystem(v.Name.Value),
+            Identifier.AggregateRoot => new AggregateRoot(v.Name.Value),
+            Identifier.Entity => new Entity(v.Name.Value),
+            Identifier.ValueObject => new ValueObject(v.Name.Value),
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        // these should never be top-level things :shrug:
+        NameValue => throw new NotImplementedException(),
+        ChildNodes => throw new NotImplementedException(),
+        IdentifierValue => throw new NotImplementedException(),
+        _ => throw new ArgumentOutOfRangeException(nameof(expression))
     };
-
 }
