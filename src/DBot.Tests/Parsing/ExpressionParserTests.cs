@@ -17,8 +17,9 @@ public class ExpressionParserTests
 
         var result = ExpressionParser.TryParse(tokens.Value, out var expr, out var error, out var errorPosition);
 
+        error.Should().BeNull();
         result.Should().BeTrue();
         expr.Should().NotBeNull();
-        error.Should().BeNull();
+        
     }
 }
