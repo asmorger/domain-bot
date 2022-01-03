@@ -45,6 +45,7 @@ public class ExpressionEvaluator
         CoupletValue v => v.Keyword.Value switch {
             Keyword.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
             Keyword.Description => new Description(v.Children.First().ToString()!),
+            Keyword.Properties => new PropertyListing(v.Children.Select(x => new Property(x.ToString()!))),
             _ => throw new ArgumentOutOfRangeException()
         },
         TripletValue v => v.Keyword.Value switch {

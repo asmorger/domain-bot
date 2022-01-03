@@ -26,7 +26,7 @@ public class Parse : DslCommand
     
     private TreeNode BuildNode(CodeElement element)
     {
-        var node = new TreeNode(new Markup(element.Name));
+        var node = new TreeNode(new Markup(element.Name.EscapeMarkup()));
 
         if (element is HierarchicalCodeElement current)
         {
