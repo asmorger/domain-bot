@@ -8,6 +8,7 @@ public enum Keyword
 {
     System,
     AggregateRoot,
+    Behaviors,
     Description,
     Entity,
     Events,
@@ -19,6 +20,7 @@ public static class ExpressionTextParsers
     public static TextParser<Keyword> Keyword { get; } =
         Span.EqualTo("system").Value(Parsing.Keyword.System)
             .Or(Span.EqualTo("aggregate").Value(Parsing.Keyword.AggregateRoot))
+            .Or(Span.EqualTo("behaviors").Value(Parsing.Keyword.Behaviors))
             .Or(Span.EqualTo("description").Value(Parsing.Keyword.Description))
             .Or(Span.EqualTo("entity").Value(Parsing.Keyword.Entity))
                 .Try()
@@ -30,6 +32,7 @@ public static class ExpressionTextParsers
         builder
             .Match(Span.EqualTo("system"), ExpressionToken.System)
             .Match(Span.EqualTo("aggregate"), ExpressionToken.Aggregate)
+            .Match(Span.EqualTo("behaviors"), ExpressionToken.Behavior)
             .Match(Span.EqualTo("description"), ExpressionToken.Description)
             .Match(Span.EqualTo("entity"), ExpressionToken.Entity)
             .Match(Span.EqualTo("events"), ExpressionToken.Events)

@@ -14,6 +14,7 @@ public static class ExpressionParser
     private static ExpressionTokenParser Keyword { get; } =
         Token.EqualTo(ExpressionToken.System)
             .Or(Token.EqualTo(ExpressionToken.Aggregate))
+            .Or(Token.EqualTo(ExpressionToken.Behavior))
             .Or(Token.EqualTo(ExpressionToken.Description))
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.Events))
