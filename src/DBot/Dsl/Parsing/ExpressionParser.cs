@@ -25,7 +25,7 @@ public static class ExpressionParser
 
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => KeywordTriplet)
+        from values in Parse.Ref(() => DslValue)
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
                 end: Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
@@ -35,8 +35,18 @@ public static class ExpressionParser
             (name, identifier, array) =>
                 new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
-    private static ExpressionTokenParser Expression = 
+    private static ExpressionTokenParser KeywordCouplet { get; } =
+        from keyword in Keyword
+        from array in Array
+        select (Expression) new CoupletValue((KeywordValue) keyword, ((ChildNodes) array).Children);
+
+    private static ExpressionTokenParser DslValue { get; } =
         KeywordTriplet
+            .Or(KeywordCouplet)
+            .Or(String);
+
+    private static ExpressionTokenParser Expression = 
+        DslValue
             .Named("DSL value");
     
     private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
