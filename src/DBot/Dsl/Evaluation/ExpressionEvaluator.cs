@@ -42,21 +42,21 @@ public class ExpressionEvaluator
     
     static CodeElement EvaluateExpression(Expression expression) => expression switch
     {
-        ListingNodeValue v => v.Identifier.Value switch {
-            Identifier.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
+        ListingNodeValue v => v.Keyword.Value switch {
+            // Identifier.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
             _ => throw new ArgumentOutOfRangeException()
         },
-        NodeValue v => v.Identifier.Value switch {
-            Identifier.System => new SoftwareSystem(v.Name.Value),
-            Identifier.AggregateRoot => new AggregateRoot(v.Name.Value),
-            Identifier.Entity => new Entity(v.Name.Value),
-            Identifier.ValueObject => new ValueObject(v.Name.Value),
+        NodeValue v => v.Keyword.Value switch {
+            Keyword.System => new SoftwareSystem(v.Name.Value),
+            Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
+            Keyword.Entity => new Entity(v.Name.Value),
+            Keyword.ValueObject => new ValueObject(v.Name.Value),
             _ => throw new ArgumentOutOfRangeException()
         },
         // these should never be top-level things :shrug:
         NameValue => throw new NotImplementedException(),
         ChildNodes => throw new NotImplementedException(),
-        IdentifierValue => throw new NotImplementedException(),
+        KeywordValue => throw new NotImplementedException(),
         _ => throw new ArgumentOutOfRangeException(nameof(expression))
     };
 }

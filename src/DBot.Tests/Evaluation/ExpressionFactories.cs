@@ -11,10 +11,10 @@ public static class ExpressionFactories
 {
     private static Hacker Lorem => new();
     
-    private static IdentifierValue SystemId => new(Identifier.System);
-    private static IdentifierValue AggregateId => new(Identifier.AggregateRoot);
-    private static IdentifierValue EntityId => new(Identifier.Entity);
-    private static IdentifierValue ValueObjectId => new(Identifier.ValueObject);
+    private static KeywordValue SystemId => new(Keyword.System);
+    private static KeywordValue AggregateId => new(Keyword.AggregateRoot);
+    private static KeywordValue EntityId => new(Keyword.Entity);
+    private static KeywordValue ValueObjectId => new(Keyword.ValueObject);
 
     private static NameValue Name() => new (Lorem.Verb());
 
@@ -24,7 +24,7 @@ public static class ExpressionFactories
     public static readonly NodeValue ComplexAggregateSystem = Node(SystemId, 
         Aggregate(Entity(), Entity(), ValueObject()));
 
-    private static NodeValue Node(IdentifierValue id, params Expression[] children) => new(id, Name(), children);
+    private static NodeValue Node(KeywordValue id, params Expression[] children) => new(id, Name(), children);
     private static NodeValue Aggregate(params Expression[] children) => new (AggregateId, Name(), children);
     private static NodeValue Entity(params Expression[] children) => new (EntityId, Name(), children);
     private static NodeValue ValueObject(params Expression[] children) => new (ValueObjectId, Name(), children);

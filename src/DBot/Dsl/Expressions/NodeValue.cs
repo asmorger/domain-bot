@@ -2,20 +2,20 @@
 
 public class NodeValue : Expression
 {
-    public NodeValue(IdentifierValue identifier, NameValue name, Expression[] children)
+    public NodeValue(KeywordValue keyword, NameValue name, Expression[] children)
     {
-        Identifier = identifier;
+        Keyword = keyword;
         Name = name;
         Children = children;
     }
 
-    public IdentifierValue Identifier { get; init; }
+    public KeywordValue Keyword { get; init; }
     public NameValue Name { get; init; }
     public Expression[] Children { get; init; }
 
     public bool HasChildren => Children.Any();
 
-    public override string ToString() => $"{Identifier}:{Name} with {Children.Length} items";
+    public override string ToString() => $"{Keyword}:{Name} with {Children.Length} items";
 }
 
 public class ChildNodes : Expression

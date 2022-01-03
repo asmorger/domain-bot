@@ -2,16 +2,16 @@
 
 public class ListingNodeValue : Expression
 {
-    public ListingNodeValue(IdentifierValue identifier, Expression[] children)
+    public ListingNodeValue(KeywordValue keyword, Expression[] children)
     {
-        Identifier = identifier;
+        Keyword = keyword;
         Children = children;
     }
 
-    public IdentifierValue Identifier { get; init; }
+    public KeywordValue Keyword { get; init; }
     public Expression[] Children { get; init; }
 
     public bool HasChildren => Children.Any();
 
-    public override string ToString() => $"{Identifier}with {Children.Length} items";
+    public override string ToString() => $"{Keyword}with {Children.Length} items";
 }

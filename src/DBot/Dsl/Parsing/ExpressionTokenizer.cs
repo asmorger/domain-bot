@@ -19,7 +19,7 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
-        .MatchIdentifiers()
+        .MatchKeywords()
         .Match(QuotedString, ExpressionToken.Name)
         .Match(Span.NonWhiteSpace, ExpressionToken.Name)
         .Ignore(Span.WhiteSpace)

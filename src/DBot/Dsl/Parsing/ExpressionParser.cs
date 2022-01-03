@@ -11,13 +11,13 @@ namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
-    private static ExpressionTokenParser Identifier { get; } =
+    private static ExpressionTokenParser Keyword { get; } =
         Token.EqualTo(ExpressionToken.System)
             .Or(Token.EqualTo(ExpressionToken.Aggregate))
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
-            .Apply(ExpressionTextParsers.Identifier)
-            .Select(id => (Expression) new IdentifierValue(id));
+            .Apply(ExpressionTextParsers.Keyword)
+            .Select(id => (Expression) new KeywordValue(id));
 
     private static ExpressionTokenParser Name { get; } =
         Token.EqualTo(ExpressionToken.Name)
@@ -31,9 +31,9 @@ public static class ExpressionParser
         select (Expression) new ChildNodes(values);
     
     private static ExpressionTokenParser Node { get; } =
-        Parse.Chain(Name, Array.Or(Identifier),
+        Parse.Chain(Name, Array.Or(Keyword),
             (name, identifier, array) =>
-                new NodeValue((IdentifierValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
+                new NodeValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
     private static ExpressionTokenParser Expression = 
         Node

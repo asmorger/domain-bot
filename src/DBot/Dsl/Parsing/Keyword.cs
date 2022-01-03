@@ -4,7 +4,7 @@ using Superpower.Tokenizers;
 
 namespace DBot.Dsl.Parsing;
 
-public enum Identifier
+public enum Keyword
 {
     System,
     AggregateRoot,
@@ -13,13 +13,13 @@ public enum Identifier
 }
 public static class ExpressionTextParsers
 {
-    public static TextParser<Identifier> Identifier { get; } =
-        Span.EqualTo("system").Value(Parsing.Identifier.System)
-            .Or(Span.EqualTo("aggregate").Value(Parsing.Identifier.AggregateRoot))
-            .Or(Span.EqualTo("entity").Value(Parsing.Identifier.Entity))
-            .Or(Span.EqualTo("value").Value(Parsing.Identifier.ValueObject));
+    public static TextParser<Keyword> Keyword { get; } =
+        Span.EqualTo("system").Value(Parsing.Keyword.System)
+            .Or(Span.EqualTo("aggregate").Value(Parsing.Keyword.AggregateRoot))
+            .Or(Span.EqualTo("entity").Value(Parsing.Keyword.Entity))
+            .Or(Span.EqualTo("value").Value(Parsing.Keyword.ValueObject));
 
-    public static TokenizerBuilder<ExpressionToken> MatchIdentifiers(this TokenizerBuilder<ExpressionToken> builder) =>
+    public static TokenizerBuilder<ExpressionToken> MatchKeywords(this TokenizerBuilder<ExpressionToken> builder) =>
         builder
             .Match(Span.EqualTo("system"), ExpressionToken.System)
             .Match(Span.EqualTo("aggregate"), ExpressionToken.Aggregate)
