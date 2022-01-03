@@ -11,6 +11,7 @@ public enum Keyword
     Description,
     Entity,
     Events,
+    Properties,
     ValueObject
 }
 public static class ExpressionTextParsers
@@ -22,6 +23,7 @@ public static class ExpressionTextParsers
             .Or(Span.EqualTo("entity").Value(Parsing.Keyword.Entity))
                 .Try()
                 .Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
+            .Or(Span.EqualTo("properties").Value(Parsing.Keyword.Properties))
             .Or(Span.EqualTo("value").Value(Parsing.Keyword.ValueObject));
 
     public static TokenizerBuilder<ExpressionToken> MatchKeywords(this TokenizerBuilder<ExpressionToken> builder) =>
@@ -31,5 +33,6 @@ public static class ExpressionTextParsers
             .Match(Span.EqualTo("description"), ExpressionToken.Description)
             .Match(Span.EqualTo("entity"), ExpressionToken.Entity)
             .Match(Span.EqualTo("events"), ExpressionToken.Events)
+            .Match(Span.EqualTo("properties"), ExpressionToken.Properties)
             .Match(Span.EqualTo("value"), ExpressionToken.ValueObject);
 }
