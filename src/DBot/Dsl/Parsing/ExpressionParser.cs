@@ -30,20 +30,20 @@ public static class ExpressionParser
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
                 end: Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
-    
+
     private static ExpressionTokenParser KeywordTriplet { get; } =
         Parse.Chain(String, Array.Or(Keyword),
             (name, identifier, array) =>
                 new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
-    private static ExpressionTokenParser KeywordCouplet { get; } =
-        from keyword in Keyword
+    private static ExpressionTokenParser EventsCouplet { get; } =
+        from keyword in Token.EqualTo(ExpressionToken.Events)
         from array in Array
-        select (Expression) new CoupletValue((KeywordValue) keyword, ((ChildNodes) array).Children);
+        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Events), ((ChildNodes) array).Children);
 
     private static ExpressionTokenParser DslValue { get; } =
-        KeywordTriplet
-            .Or(KeywordCouplet)
+        EventsCouplet
+            .Or(KeywordTriplet)
             .Or(String);
 
     private static ExpressionTokenParser Expression = 
