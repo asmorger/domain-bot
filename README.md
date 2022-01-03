@@ -12,7 +12,12 @@ A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [do
 system "Gizmo Maker" { 
     aggregate Whatzit {
         entity Whozit { },
-        entity Thingamajig { }
+        entity Thingamajig { },
+        
+        events {
+            WhatzitCreated,
+            WhatzitRemoved
+        }
     },
     
     value Dohickey { }

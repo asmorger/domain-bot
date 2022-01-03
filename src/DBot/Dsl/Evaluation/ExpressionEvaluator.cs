@@ -8,47 +8,55 @@ public class ExpressionEvaluator
 {
     public static CodeElement Evaluate(Expression expression)
     {
-        if (expression is not NodeValue node)
+        if (expression is not ExpressionWithChildren node)
         {
             throw new ArgumentException($"Unsupported expression {expression}.");
         }
 
-        var system = EvaluateCodeHierarchy(node);
+        var system = EvaluateCodeHierarchy(expression);
         return system;
     }
 
-    static CodeElement EvaluateCodeHierarchy(NodeValue expression)
+    static CodeElement EvaluateCodeHierarchy(Expression expression)
     {
-        var node = EvaluateNode(expression);
+        var node = EvaluateExpression(expression);
 
-        if (!expression.HasChildren)
+        if (expression is not ExpressionWithChildren expressionWithChildren)
         {
             return node;
         }
 
         if (node is not HierarchicalCodeElement parent)
         {
-            throw new EvaluationException($"The element {expression.Name} may contain any child items.");
+            return node;
         }
 
-        foreach (var child in expression.Children)
+        foreach (var child in expressionWithChildren.Children)
         {
-            var childNode = EvaluateCodeHierarchy((NodeValue) child);
+            var childNode = EvaluateCodeHierarchy(child);
             parent.AddChild(childNode);
         }
 
         return node;
     }
     
-    
-
-    static CodeElement EvaluateNode(NodeValue expression) => expression.Identifier.Value switch
+    static CodeElement EvaluateExpression(Expression expression) => expression switch
     {
-        Identifier.System => new SoftwareSystem(expression.Name.Value),
-        Identifier.AggregateRoot => new AggregateRoot(expression.Name.Value),
-        Identifier.Entity => new Entity(expression.Name.Value),
-        Identifier.ValueObject => new ValueObject(expression.Name.Value),
-        _ => throw new ArgumentException($"Unsupported expression {expression}.")
+        CoupletValue v => v.Keyword.Value switch {
+            Keyword.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        TripletValue v => v.Keyword.Value switch {
+            Keyword.System => new SoftwareSystem(v.Name.Value),
+            Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
+            Keyword.Entity => new Entity(v.Name.Value),
+            Keyword.ValueObject => new ValueObject(v.Name.Value),
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        // these should never be top-level things :shrug:
+        NameValue => throw new NotImplementedException(),
+        ChildNodes => throw new NotImplementedException(),
+        KeywordValue => throw new NotImplementedException(),
+        _ => throw new ArgumentOutOfRangeException(nameof(expression))
     };
-
 }

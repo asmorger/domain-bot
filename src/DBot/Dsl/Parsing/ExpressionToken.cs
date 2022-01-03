@@ -4,11 +4,13 @@ namespace DBot.Dsl.Parsing;
 
 public enum ExpressionToken
 {
-    Name,
+    String,
     Comma,
+    NewLine,
     [Token(Category = "keyword")] System,
     [Token(Category = "keyword")] Aggregate,
     [Token(Category = "keyword")] Entity,
+    [Token(Category = "keyword")] Events,
     [Token(Category = "keyword")] ValueObject,
     [Token(Example = "{")] LBracket,
     [Token(Example = "}")] RBracket

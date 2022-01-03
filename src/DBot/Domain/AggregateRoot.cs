@@ -4,18 +4,9 @@ using System.Diagnostics;
 namespace DBot.Domain;
 
 [DebuggerDisplay("Aggregate: {Name}")]
-public class AggregateRoot : HierarchicalCodeElement
+public class AggregateRoot : BaseHierarchicalCodeElement
 {
-    public string Name { get; }
-    private readonly List<CodeElement> _elements = new();
-
-    public AggregateRoot(string name)
+    public AggregateRoot(string name) : base(name)
     {
-        Name = name;
     }
-    
-    public void AddChild(CodeElement element) => _elements.Add(element);
-    public IEnumerator<CodeElement> GetEnumerator() => _elements.GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
