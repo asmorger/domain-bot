@@ -9,9 +9,14 @@ A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [do
 ## A quick example
 
 ```
-system "Gizmo Maker" { 
     aggregate Whatzit {
-        entity Whozit { },
+        entity Whozit { 
+            events {
+                WhozitCreated,
+                WhozitRenamed,
+                WhozitRemoved
+            }
+        },
         entity Thingamajig { },
         
         events {

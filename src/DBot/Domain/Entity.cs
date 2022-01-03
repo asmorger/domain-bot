@@ -3,12 +3,9 @@
 namespace DBot.Domain;
 
 [DebuggerDisplay("Entity: {Name}")]
-public class Entity : CodeElement
+public class Entity : BaseHierarchicalCodeElement
 {
-    public string Name { get; }
-
-    public Entity(string name)
+    public Entity(string name) : base(name)
     {
-        Name = name;
     }
 }
