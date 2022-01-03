@@ -12,10 +12,6 @@ namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
-    private static readonly ExpressionTokenParser Expression =
-        DslValue
-            .Named("DSL value");
-
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
         from values in Parse.Ref(() => DslValue)
@@ -45,7 +41,10 @@ public static class ExpressionParser
             .Or(BehaviorsParsers.Behaviors)
             .Or(CodeElementKeyword)
             .Or(UniversalParsers.String);
-
+    
+    private static readonly ExpressionTokenParser Expression =
+        DslValue
+            .Named("DSL value");
     private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
 
     public static bool TryParse(TokenList<ExpressionToken> tokens, [NotNullWhen(true)] out Expression? expr,
