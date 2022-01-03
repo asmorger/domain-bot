@@ -23,6 +23,11 @@ system GizmoMaker {
             Dohickey Dohickey
         },
         
+        behaviors {
+            Rename raises WhatzitNameChanged,
+            CreateWhozit raises WhozitCreated
+        },
+        
         entity Whozit {
             description "It has a face!",
             
@@ -41,6 +46,7 @@ system GizmoMaker {
         
         events {
             WhatzitCreated,
+            WhatzitNameChanged,
             WhatzitDeleted
         }
     },
