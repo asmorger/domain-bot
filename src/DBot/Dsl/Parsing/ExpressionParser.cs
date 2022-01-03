@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DBot.Dsl.Expressions;
+using DBot.Dsl.Parsing.Parsers;
 using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
@@ -11,23 +12,6 @@ namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
-    private static ExpressionTokenParser Keyword { get; } =
-        Token.EqualTo(ExpressionToken.System)
-            .Or(Token.EqualTo(ExpressionToken.Aggregate))
-            .Or(Token.EqualTo(ExpressionToken.Behavior))
-            .Or(Token.EqualTo(ExpressionToken.Description))
-            .Or(Token.EqualTo(ExpressionToken.Entity))
-            .Or(Token.EqualTo(ExpressionToken.Events))
-            .Or(Token.EqualTo(ExpressionToken.Properties))
-            .Or(Token.EqualTo(ExpressionToken.Raises))
-            .Or(Token.EqualTo(ExpressionToken.ValueObject))
-            .Apply(ExpressionTextParsers.Keyword)
-            .Select(id => (Expression) new KeywordValue(id));
-
-    private static ExpressionTokenParser String { get; } =
-        Token.EqualTo(ExpressionToken.String)
-            .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
-
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
         from values in Parse.Ref(() => DslValue)
@@ -50,7 +34,7 @@ public static class ExpressionParser
         select (Expression) new ChildNodes(values);
 
     private static ExpressionTokenParser KeywordTriplet { get; } =
-        Parse.Chain(String, Array.Or(Keyword),
+        Parse.Chain(UniversalParsers.String, Array.Or(UniversalParsers.Keyword),
             (name, identifier, array) =>
                 new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
@@ -61,11 +45,11 @@ public static class ExpressionParser
     
     private static ExpressionTokenParser DescriptionCouplet { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Description)
-        from value in String
+        from value in UniversalParsers.String
         select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Description), new []{ value });
     
     private static ExpressionTokenParser RaisesTriplet { get; } =
-        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), String,
+        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), UniversalParsers.String,
             (name, behaviorName, eventToBeRaised) =>
                 new RaisesValue(behaviorName, eventToBeRaised));
     
@@ -75,8 +59,8 @@ public static class ExpressionParser
         select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Behaviors), ((ChildNodes) value).Children);
 
     private static ExpressionTokenParser PropertyValue { get; } =
-        from name in String
-        from value in String
+        from name in UniversalParsers.String
+        from value in UniversalParsers.String
         select (Expression) new PropertyValue(name, value);
     
     private static ExpressionTokenParser PropertiesCouplet { get; } =
@@ -90,7 +74,7 @@ public static class ExpressionParser
             .Or(PropertiesCouplet)
             .Or(BehaviorCouplet)
             .Or(KeywordTriplet)
-            .Or(String);
+            .Or(UniversalParsers.String);
 
     private static ExpressionTokenParser Expression = 
         DslValue
