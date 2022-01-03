@@ -23,27 +23,27 @@ public static class ExpressionParser
                 Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
 
-    private static ExpressionTokenParser KeywordTriplet { get; } =
+    private static ExpressionTokenParser CodeElementKeyword { get; } =
         Parse.Chain(UniversalParsers.String, Array.Or(UniversalParsers.Keyword),
             (name, identifier, array) =>
                 new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
-    private static ExpressionTokenParser EventsCouplet { get; } =
+    private static ExpressionTokenParser Events { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Events)
         from array in Array
         select (Expression) new CoupletValue(new KeywordValue(Keyword.Events), ((ChildNodes) array).Children);
 
-    private static ExpressionTokenParser DescriptionCouplet { get; } =
+    private static ExpressionTokenParser Description { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Description)
         from value in UniversalParsers.String
         select (Expression) new CoupletValue(new KeywordValue(Keyword.Description), new[] {value});
 
     private static ExpressionTokenParser DslValue { get; } =
-        EventsCouplet
-            .Or(DescriptionCouplet)
+        Events
+            .Or(Description)
             .Or(PropertiesParsers.Properties)
             .Or(BehaviorsParsers.Behaviors)
-            .Or(KeywordTriplet)
+            .Or(CodeElementKeyword)
             .Or(UniversalParsers.String);
 
     private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
