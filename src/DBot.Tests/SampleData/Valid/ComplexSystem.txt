@@ -1,6 +1,12 @@
 system GizmoMaker { 
+    description "A sample software system",
+    
     aggregate Whatzit {
-        entity Whozit { 
+        description "The best selling thing ever!",
+        
+        entity Whozit {
+            description "It has a face!",
+            
             events {
                 WhozitCreated,
                 WhozitRenamed,

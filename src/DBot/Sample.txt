@@ -1,7 +1,24 @@
-system "Gizmo Maker" { 
+system GizmoMaker { 
+    description "A sample software system",
+    
     aggregate Whatzit {
-        entity Whozit { },
-        entity Thingamajig { }
+        description "The best selling thing ever!",
+        
+        entity Whozit {
+            description "It has a face!",
+            
+            events {
+                WhozitCreated,
+                WhozitRenamed,
+                WhozitRemoved
+            }
+        },
+        entity Thingamajig { },
+        
+        events {
+            WhatzitCreated,
+            WhatzitDeleted
+        }
     },
     
     value Dohickey { }

@@ -9,8 +9,15 @@ A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [do
 ## A quick example
 
 ```
+system GizmoMaker { 
+    description "A sample software system",
+    
     aggregate Whatzit {
-        entity Whozit { 
+        description "The best selling thing ever!",
+        
+        entity Whozit {
+            description "It has a face!",
+            
             events {
                 WhozitCreated,
                 WhozitRenamed,
@@ -21,7 +28,7 @@ A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [do
         
         events {
             WhatzitCreated,
-            WhatzitRemoved
+            WhatzitDeleted
         }
     },
     
