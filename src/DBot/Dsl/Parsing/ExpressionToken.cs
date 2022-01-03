@@ -4,7 +4,7 @@ namespace DBot.Dsl.Parsing;
 
 public enum ExpressionToken
 {
-    Name,
+    String,
     Comma,
     [Token(Category = "keyword")] System,
     [Token(Category = "keyword")] Aggregate,

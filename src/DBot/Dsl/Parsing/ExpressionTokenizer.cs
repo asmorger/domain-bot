@@ -20,8 +20,8 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
         .MatchKeywords()
-        .Match(QuotedString, ExpressionToken.Name)
-        .Match(Span.NonWhiteSpace, ExpressionToken.Name)
+        .Match(QuotedString, ExpressionToken.String)
+        .Match(Span.NonWhiteSpace, ExpressionToken.String)
         .Ignore(Span.WhiteSpace)
         .Build();
     

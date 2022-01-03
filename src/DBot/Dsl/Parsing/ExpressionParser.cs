@@ -19,8 +19,8 @@ public static class ExpressionParser
             .Apply(ExpressionTextParsers.Keyword)
             .Select(id => (Expression) new KeywordValue(id));
 
-    private static ExpressionTokenParser Name { get; } =
-        Token.EqualTo(ExpressionToken.Name)
+    private static ExpressionTokenParser String { get; } =
+        Token.EqualTo(ExpressionToken.String)
             .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
 
     private static ExpressionTokenParser Array { get; } =
@@ -31,7 +31,7 @@ public static class ExpressionParser
         select (Expression) new ChildNodes(values);
     
     private static ExpressionTokenParser Node { get; } =
-        Parse.Chain(Name, Array.Or(Keyword),
+        Parse.Chain(String, Array.Or(Keyword),
             (name, identifier, array) =>
                 new NodeValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
