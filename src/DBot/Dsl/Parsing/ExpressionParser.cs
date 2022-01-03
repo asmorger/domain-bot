@@ -23,12 +23,7 @@ public static class ExpressionParser
                 Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
 
-    private static ExpressionTokenParser RaisesArray { get; } =
-        from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => RaisesTriplet)
-            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma),
-                Token.EqualTo(ExpressionToken.RBracket))
-        select (Expression) new ChildNodes(values);
+
 
     private static ExpressionTokenParser KeywordTriplet { get; } =
         Parse.Chain(UniversalParsers.String, Array.Or(UniversalParsers.Keyword),
@@ -45,21 +40,13 @@ public static class ExpressionParser
         from value in UniversalParsers.String
         select (Expression) new CoupletValue(new KeywordValue(Keyword.Description), new[] {value});
 
-    private static ExpressionTokenParser RaisesTriplet { get; } =
-        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), UniversalParsers.String,
-            (name, behaviorName, eventToBeRaised) =>
-                new RaisesValue(behaviorName, eventToBeRaised));
 
-    private static ExpressionTokenParser BehaviorCouplet { get; } =
-        from keyword in Token.EqualTo(ExpressionToken.Behavior)
-        from value in RaisesArray
-        select (Expression) new CoupletValue(new KeywordValue(Keyword.Behaviors), ((ChildNodes) value).Children);
 
     private static ExpressionTokenParser DslValue { get; } =
         EventsCouplet
             .Or(DescriptionCouplet)
             .Or(PropertiesParsers.PropertiesCouplet)
-            .Or(BehaviorCouplet)
+            .Or(BehaviorsParsers.Behaviors)
             .Or(KeywordTriplet)
             .Or(UniversalParsers.String);
 
