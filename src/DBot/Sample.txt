@@ -4,8 +4,21 @@ system GizmoMaker {
     aggregate Whatzit {
         description "The best selling thing ever!",
         
+        properties {
+            string Name,
+            int ItemCount,
+            Whozit[] Whozits,
+            Thingamajig[] Thingamajigs,
+            Dohickey Dohickey
+        },
+        
         entity Whozit {
             description "It has a face!",
+            
+            properties {
+                string Name,
+                string ModeledAfter
+            },
             
             events {
                 WhozitCreated,
