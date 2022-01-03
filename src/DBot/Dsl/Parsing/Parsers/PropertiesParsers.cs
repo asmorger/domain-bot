@@ -20,7 +20,7 @@ public class PropertiesParsers
                 Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
     
-    public static ExpressionTokenParser PropertiesCouplet { get; } =
+    public static ExpressionTokenParser Properties { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Properties)
         from array in PropertiesArray
         select (Expression) new CoupletValue(new KeywordValue(Keyword.Properties), ((ChildNodes) array).Children);

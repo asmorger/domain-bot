@@ -23,8 +23,6 @@ public static class ExpressionParser
                 Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
 
-
-
     private static ExpressionTokenParser KeywordTriplet { get; } =
         Parse.Chain(UniversalParsers.String, Array.Or(UniversalParsers.Keyword),
             (name, identifier, array) =>
@@ -40,12 +38,10 @@ public static class ExpressionParser
         from value in UniversalParsers.String
         select (Expression) new CoupletValue(new KeywordValue(Keyword.Description), new[] {value});
 
-
-
     private static ExpressionTokenParser DslValue { get; } =
         EventsCouplet
             .Or(DescriptionCouplet)
-            .Or(PropertiesParsers.PropertiesCouplet)
+            .Or(PropertiesParsers.Properties)
             .Or(BehaviorsParsers.Behaviors)
             .Or(KeywordTriplet)
             .Or(UniversalParsers.String);
