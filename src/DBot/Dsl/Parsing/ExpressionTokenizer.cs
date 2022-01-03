@@ -7,6 +7,9 @@ namespace DBot.Dsl.Parsing;
 
 public static class ExpressionTokenizer
 {
+    private static TextParser<TextSpan> NonWhiteSpaceNonComma { get; } = 
+        Span.WithoutAny(x => char.IsWhiteSpace(x) || x == ',' );
+    
     private static TextParser<Unit> QuotedString { get; } =
         from open in Character.EqualTo('"')
         from content in Character.EqualTo('\\').IgnoreThen(Character.AnyChar).Value(Unit.Value).Try()
@@ -19,11 +22,11 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
-        .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
-        .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
+        // .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
+        // .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
         .MatchKeywords()
         .Match(QuotedString, ExpressionToken.String)
-        .Match(Span.NonWhiteSpace, ExpressionToken.String)
+        .Match(NonWhiteSpaceNonComma, ExpressionToken.String)
         .Ignore(Span.WhiteSpace)
         .Build();
     
