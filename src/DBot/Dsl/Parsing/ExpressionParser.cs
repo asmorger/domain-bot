@@ -19,6 +19,7 @@ public static class ExpressionParser
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.Events))
             .Or(Token.EqualTo(ExpressionToken.Properties))
+            .Or(Token.EqualTo(ExpressionToken.Raises))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
             .Apply(ExpressionTextParsers.Keyword)
             .Select(id => (Expression) new KeywordValue(id));
