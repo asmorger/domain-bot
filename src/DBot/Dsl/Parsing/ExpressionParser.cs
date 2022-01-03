@@ -14,10 +14,12 @@ public static class ExpressionParser
     private static ExpressionTokenParser Keyword { get; } =
         Token.EqualTo(ExpressionToken.System)
             .Or(Token.EqualTo(ExpressionToken.Aggregate))
+            .Or(Token.EqualTo(ExpressionToken.Behavior))
             .Or(Token.EqualTo(ExpressionToken.Description))
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.Events))
             .Or(Token.EqualTo(ExpressionToken.Properties))
+            .Or(Token.EqualTo(ExpressionToken.Raises))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
             .Apply(ExpressionTextParsers.Keyword)
             .Select(id => (Expression) new KeywordValue(id));
@@ -39,6 +41,13 @@ public static class ExpressionParser
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
                 end: Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
+    
+    private static ExpressionTokenParser RaisesArray { get; } =
+        from begin in Token.EqualTo(ExpressionToken.LBracket)
+        from values in Parse.Ref(() => RaisesTriplet)
+            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
+                end: Token.EqualTo(ExpressionToken.RBracket))
+        select (Expression) new ChildNodes(values);
 
     private static ExpressionTokenParser KeywordTriplet { get; } =
         Parse.Chain(String, Array.Or(Keyword),
@@ -54,6 +63,16 @@ public static class ExpressionParser
         from keyword in Token.EqualTo(ExpressionToken.Description)
         from value in String
         select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Description), new []{ value });
+    
+    private static ExpressionTokenParser RaisesTriplet { get; } =
+        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), String,
+            (name, behaviorName, eventToBeRaised) =>
+                new RaisesValue(behaviorName, eventToBeRaised));
+    
+    private static ExpressionTokenParser BehaviorCouplet { get; } =
+        from keyword in Token.EqualTo(ExpressionToken.Behavior)
+        from value in RaisesArray
+        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Behaviors), ((ChildNodes) value).Children);
 
     private static ExpressionTokenParser PropertyValue { get; } =
         from name in String
@@ -69,6 +88,7 @@ public static class ExpressionParser
         EventsCouplet
             .Or(DescriptionCouplet)
             .Or(PropertiesCouplet)
+            .Or(BehaviorCouplet)
             .Or(KeywordTriplet)
             .Or(String);
 

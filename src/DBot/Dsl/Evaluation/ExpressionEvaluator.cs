@@ -43,6 +43,7 @@ public class ExpressionEvaluator
     static CodeElement EvaluateExpression(Expression expression) => expression switch
     {
         CoupletValue v => v.Keyword.Value switch {
+            Keyword.Behaviors => new BehaviorListing(v.Children.Cast<RaisesValue>().Select(x => new Behavior(x.BehaviorName.ToString()!, x.EventName.ToString()!))),
             Keyword.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
             Keyword.Description => new Description(v.Children.First().ToString()!),
             Keyword.Properties => new PropertyListing(v.Children.Select(x => new Property(x.ToString()!))),
