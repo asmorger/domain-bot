@@ -1,104 +1,53 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DBot.Dsl.Expressions;
+using DBot.Dsl.Parsing.Parsers;
 using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
-using Expression = DBot.Dsl.Expressions.Expression;
-using ExpressionTokenParser = Superpower.TokenListParser<DBot.Dsl.Parsing.ExpressionToken, DBot.Dsl.Expressions.Expression>;
+using ExpressionTokenParser =
+    Superpower.TokenListParser<DBot.Dsl.Parsing.ExpressionToken, DBot.Dsl.Expressions.Expression>;
 
 
 namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
-    private static ExpressionTokenParser Keyword { get; } =
-        Token.EqualTo(ExpressionToken.System)
-            .Or(Token.EqualTo(ExpressionToken.Aggregate))
-            .Or(Token.EqualTo(ExpressionToken.Behavior))
-            .Or(Token.EqualTo(ExpressionToken.Description))
-            .Or(Token.EqualTo(ExpressionToken.Entity))
-            .Or(Token.EqualTo(ExpressionToken.Events))
-            .Or(Token.EqualTo(ExpressionToken.Properties))
-            .Or(Token.EqualTo(ExpressionToken.Raises))
-            .Or(Token.EqualTo(ExpressionToken.ValueObject))
-            .Apply(ExpressionTextParsers.Keyword)
-            .Select(id => (Expression) new KeywordValue(id));
-
-    private static ExpressionTokenParser String { get; } =
-        Token.EqualTo(ExpressionToken.String)
-            .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
-
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
         from values in Parse.Ref(() => DslValue)
-            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
-                end: Token.EqualTo(ExpressionToken.RBracket))
-        select (Expression) new ChildNodes(values);
-    
-    private static ExpressionTokenParser PropertiesArray { get; } =
-        from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => PropertyValue)
-            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
-                end: Token.EqualTo(ExpressionToken.RBracket))
-        select (Expression) new ChildNodes(values);
-    
-    private static ExpressionTokenParser RaisesArray { get; } =
-        from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => RaisesTriplet)
-            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
-                end: Token.EqualTo(ExpressionToken.RBracket))
+            .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma),
+                Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
 
-    private static ExpressionTokenParser KeywordTriplet { get; } =
-        Parse.Chain(String, Array.Or(Keyword),
+    private static ExpressionTokenParser CodeElementKeyword { get; } =
+        Parse.Chain(UniversalParsers.String, Array.Or(UniversalParsers.Keyword),
             (name, identifier, array) =>
                 new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
-    private static ExpressionTokenParser EventsCouplet { get; } =
+    private static ExpressionTokenParser Events { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Events)
         from array in Array
-        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Events), ((ChildNodes) array).Children);
-    
-    private static ExpressionTokenParser DescriptionCouplet { get; } =
-        from keyword in Token.EqualTo(ExpressionToken.Description)
-        from value in String
-        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Description), new []{ value });
-    
-    private static ExpressionTokenParser RaisesTriplet { get; } =
-        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), String,
-            (name, behaviorName, eventToBeRaised) =>
-                new RaisesValue(behaviorName, eventToBeRaised));
-    
-    private static ExpressionTokenParser BehaviorCouplet { get; } =
-        from keyword in Token.EqualTo(ExpressionToken.Behavior)
-        from value in RaisesArray
-        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Behaviors), ((ChildNodes) value).Children);
+        select (Expression) new CoupletValue(new KeywordValue(Keyword.Events), ((ChildNodes) array).Children);
 
-    private static ExpressionTokenParser PropertyValue { get; } =
-        from name in String
-        from value in String
-        select (Expression) new PropertyValue(name, value);
-    
-    private static ExpressionTokenParser PropertiesCouplet { get; } =
-        from keyword in Token.EqualTo(ExpressionToken.Properties)
-        from array in PropertiesArray
-        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Properties), ((ChildNodes) array).Children);
+    private static ExpressionTokenParser Description { get; } =
+        from keyword in Token.EqualTo(ExpressionToken.Description)
+        from value in UniversalParsers.String
+        select (Expression) new CoupletValue(new KeywordValue(Keyword.Description), new[] {value});
 
     private static ExpressionTokenParser DslValue { get; } =
-        EventsCouplet
-            .Or(DescriptionCouplet)
-            .Or(PropertiesCouplet)
-            .Or(BehaviorCouplet)
-            .Or(KeywordTriplet)
-            .Or(String);
-
-    private static ExpressionTokenParser Expression = 
+        Events
+            .Or(Description)
+            .Or(PropertiesParsers.Properties)
+            .Or(BehaviorsParsers.Behaviors)
+            .Or(CodeElementKeyword)
+            .Or(UniversalParsers.String);
+    
+    private static readonly ExpressionTokenParser Expression =
         DslValue
             .Named("DSL value");
-    
     private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
-    
-    public static bool TryParse(TokenList<ExpressionToken> tokens, [NotNullWhen(true)] out Expression? expr, 
+
+    public static bool TryParse(TokenList<ExpressionToken> tokens, [NotNullWhen(true)] out Expression? expr,
         [NotNullWhen(false)] out string? error, out Position errorPosition)
     {
         var result = Source(tokens);

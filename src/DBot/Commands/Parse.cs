@@ -26,7 +26,8 @@ public class Parse : DslCommand
     
     private TreeNode BuildNode(CodeElement element)
     {
-        var node = new TreeNode(new Markup(element.Name.EscapeMarkup()));
+        var color = GetColor(element);
+        var node = new TreeNode(new Markup($"[{color}]{element.Name.EscapeMarkup()}[/]"));
 
         if (element is HierarchicalCodeElement current)
         {
@@ -39,4 +40,20 @@ public class Parse : DslCommand
 
         return node;
     }
+
+    private Color GetColor(CodeElement element) => element switch
+    {
+        Behavior => Color.Maroon,
+        AggregateRoot => Color.Green,
+        BehaviorListing => Color.Maroon,
+        Description => Color.Grey,
+        Entity => Color.Green,
+        Event => Color.Aqua,
+        EventListing => Color.Aqua,
+        Property => Color.Purple,
+        PropertyListing => Color.Purple,
+        SoftwareSystem => Color.Aqua,
+        ValueObject => Color.Yellow,
+        _ => throw new ArgumentOutOfRangeException(nameof(element))
+    };
 }
