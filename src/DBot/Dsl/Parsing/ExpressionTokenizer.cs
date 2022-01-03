@@ -19,6 +19,8 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
+        .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
+        .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
         .MatchKeywords()
         .Match(QuotedString, ExpressionToken.String)
         .Match(Span.NonWhiteSpace, ExpressionToken.String)

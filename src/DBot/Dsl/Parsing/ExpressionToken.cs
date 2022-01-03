@@ -6,6 +6,7 @@ public enum ExpressionToken
 {
     String,
     Comma,
+    NewLine,
     [Token(Category = "keyword")] System,
     [Token(Category = "keyword")] Aggregate,
     [Token(Category = "keyword")] Entity,
