@@ -9,6 +9,7 @@ public enum ExpressionToken
     NewLine,
     [Token(Category = "keyword")] System,
     [Token(Category = "keyword")] Aggregate,
+    [Token(Category = "keyword")] Description,
     [Token(Category = "keyword")] Entity,
     [Token(Category = "keyword")] Events,
     [Token(Category = "keyword")] ValueObject,
