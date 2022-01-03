@@ -10,4 +10,5 @@ public class CoupletValue : Expression
 
     public KeywordValue Keyword { get; }
     public Expression[] Children { get; }
+    public bool HasChildren() => Children.Any();
 }

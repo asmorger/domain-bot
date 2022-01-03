@@ -1,5 +1,8 @@
-﻿namespace DBot.Domain;
+﻿using System.Diagnostics;
 
+namespace DBot.Domain;
+
+[DebuggerDisplay("events")]
 public class EventListing : BaseHierarchicalCodeElement
 {
     public EventListing() : base("events")
@@ -15,6 +18,7 @@ public class EventListing : BaseHierarchicalCodeElement
     }
 }
 
+[DebuggerDisplay("Event: {Name}")]
 public class Event : CodeElement
 {
     public string Name { get; }

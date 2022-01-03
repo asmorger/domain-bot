@@ -1,6 +1,6 @@
 ﻿namespace DBot.Dsl.Expressions;
 
-public class TripletValue : Expression
+public class TripletValue : Expression, ExpressionWithChildren
 {
     public TripletValue(KeywordValue keyword, NameValue name, Expression[] children)
     {
@@ -12,13 +12,11 @@ public class TripletValue : Expression
     public KeywordValue Keyword { get; init; }
     public NameValue Name { get; init; }
     public Expression[] Children { get; init; }
-
-    public bool HasChildren => Children.Any();
-
+    public bool HasChildren() => Children.Any();
     public override string ToString() => $"{Keyword}:{Name} with {Children.Length} items";
 }
 
-public class ChildNodes : Expression
+public class ChildNodes : Expression, ExpressionWithChildren
 {
     public ChildNodes(Expression[] children)
     {
@@ -27,6 +25,7 @@ public class ChildNodes : Expression
 
     public Expression[] Children { get; init; }
     public int Count => Children.Length;
+    public bool HasChildren() => Children.Any();
     
     public override string ToString() => $"{Count} items";
 }
