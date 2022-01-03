@@ -23,12 +23,6 @@ public static class ExpressionParser
         Token.EqualTo(ExpressionToken.Name)
             .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
 
-    private static ExpressionTokenParser Node { get; } =
-        from l in Identifier
-        from r in Name
-        from c in Array
-        select (Expression) new NodeValue((IdentifierValue)l, (NameValue)r, ((ChildNodes)c).Children);
-
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
         from values in Parse.Ref(() => Node)
