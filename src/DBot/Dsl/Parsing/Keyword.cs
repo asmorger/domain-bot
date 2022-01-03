@@ -18,7 +18,8 @@ public static class ExpressionTextParsers
         Span.EqualTo("system").Value(Parsing.Keyword.System)
             .Or(Span.EqualTo("aggregate").Value(Parsing.Keyword.AggregateRoot))
             .Or(Span.EqualTo("entity").Value(Parsing.Keyword.Entity))
-            .Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
+                .Try()
+                .Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
             .Or(Span.EqualTo("value").Value(Parsing.Keyword.ValueObject));
 
     public static TokenizerBuilder<ExpressionToken> MatchKeywords(this TokenizerBuilder<ExpressionToken> builder) =>
