@@ -3,6 +3,7 @@ system GizmoMaker {
         entity Whozit { 
             events {
                 WhozitCreated,
+                WhozitRenamed,
                 WhozitRemoved
             }
         },
