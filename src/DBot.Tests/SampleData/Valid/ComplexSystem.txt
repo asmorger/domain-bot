@@ -1,6 +1,11 @@
 system GizmoMaker { 
     aggregate Whatzit {
-        entity Whozit { },
+        entity Whozit { 
+            events {
+                WhozitCreated,
+                WhozitRemoved
+            }
+        },
         entity Thingamajig { },
         
         events {

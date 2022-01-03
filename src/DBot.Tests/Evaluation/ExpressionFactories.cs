@@ -25,7 +25,7 @@ public static class ExpressionFactories
     public static readonly TripletValue SingleAggregateSystem = Node(SystemId,  Aggregate());
     public static readonly TripletValue DualAggregateSystem = Node(SystemId,  Aggregate(),  Aggregate());
     public static readonly TripletValue ComplexAggregateSystem = Node(SystemId, 
-        Aggregate(SampleEvents(), Entity(), Entity(), ValueObject()));
+        Aggregate(SampleEvents(), Entity(SampleEvents()), Entity(), ValueObject()));
 
     private static TripletValue Node(KeywordValue id, params Expression[] children) => new(id, Name(), children);
     private static TripletValue Aggregate(params Expression[] children) => new (AggregateId, Name(), children);
