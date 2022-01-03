@@ -1,8 +1,8 @@
 ﻿namespace DBot.Dsl.Expressions;
 
-public class NodeValue : Expression
+public class TripletValue : Expression
 {
-    public NodeValue(KeywordValue keyword, NameValue name, Expression[] children)
+    public TripletValue(KeywordValue keyword, NameValue name, Expression[] children)
     {
         Keyword = keyword;
         Name = name;

@@ -8,7 +8,7 @@ public class ExpressionEvaluator
 {
     public static CodeElement Evaluate(Expression expression)
     {
-        if (expression is not NodeValue node)
+        if (expression is not TripletValue node)
         {
             throw new ArgumentException($"Unsupported expression {expression}.");
         }
@@ -17,7 +17,7 @@ public class ExpressionEvaluator
         return system;
     }
 
-    static CodeElement EvaluateCodeHierarchy(NodeValue expression)
+    static CodeElement EvaluateCodeHierarchy(TripletValue expression)
     {
         var node = EvaluateExpression(expression);
 
@@ -33,7 +33,7 @@ public class ExpressionEvaluator
 
         foreach (var child in expression.Children)
         {
-            var childNode = EvaluateCodeHierarchy((NodeValue) child);
+            var childNode = EvaluateCodeHierarchy((TripletValue) child);
             parent.AddChild(childNode);
         }
 
@@ -46,7 +46,7 @@ public class ExpressionEvaluator
             // Identifier.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
             _ => throw new ArgumentOutOfRangeException()
         },
-        NodeValue v => v.Keyword.Value switch {
+        TripletValue v => v.Keyword.Value switch {
             Keyword.System => new SoftwareSystem(v.Name.Value),
             Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
             Keyword.Entity => new Entity(v.Name.Value),

@@ -18,16 +18,16 @@ public static class ExpressionFactories
 
     private static NameValue Name() => new (Lorem.Verb());
 
-    public static readonly NodeValue EmptySystem = Node(SystemId);
-    public static readonly NodeValue SingleAggregateSystem = Node(SystemId,  Aggregate());
-    public static readonly NodeValue DualAggregateSystem = Node(SystemId,  Aggregate(),  Aggregate());
-    public static readonly NodeValue ComplexAggregateSystem = Node(SystemId, 
+    public static readonly TripletValue EmptySystem = Node(SystemId);
+    public static readonly TripletValue SingleAggregateSystem = Node(SystemId,  Aggregate());
+    public static readonly TripletValue DualAggregateSystem = Node(SystemId,  Aggregate(),  Aggregate());
+    public static readonly TripletValue ComplexAggregateSystem = Node(SystemId, 
         Aggregate(Entity(), Entity(), ValueObject()));
 
-    private static NodeValue Node(KeywordValue id, params Expression[] children) => new(id, Name(), children);
-    private static NodeValue Aggregate(params Expression[] children) => new (AggregateId, Name(), children);
-    private static NodeValue Entity(params Expression[] children) => new (EntityId, Name(), children);
-    private static NodeValue ValueObject(params Expression[] children) => new (ValueObjectId, Name(), children);
+    private static TripletValue Node(KeywordValue id, params Expression[] children) => new(id, Name(), children);
+    private static TripletValue Aggregate(params Expression[] children) => new (AggregateId, Name(), children);
+    private static TripletValue Entity(params Expression[] children) => new (EntityId, Name(), children);
+    private static TripletValue ValueObject(params Expression[] children) => new (ValueObjectId, Name(), children);
 }
 
 public class ValidExpressionTrees : DataAttribute

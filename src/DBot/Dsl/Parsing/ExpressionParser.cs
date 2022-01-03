@@ -25,18 +25,18 @@ public static class ExpressionParser
 
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => Node)
+        from values in Parse.Ref(() => KeywordTriplet)
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma), 
                 end: Token.EqualTo(ExpressionToken.RBracket))
         select (Expression) new ChildNodes(values);
     
-    private static ExpressionTokenParser Node { get; } =
+    private static ExpressionTokenParser KeywordTriplet { get; } =
         Parse.Chain(String, Array.Or(Keyword),
             (name, identifier, array) =>
-                new NodeValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
+                new TripletValue((KeywordValue) identifier, (NameValue) name, ((ChildNodes) array).Children));
 
     private static ExpressionTokenParser Expression = 
-        Node
+        KeywordTriplet
             .Named("DSL value");
     
     private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
