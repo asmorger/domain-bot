@@ -14,6 +14,7 @@ public static class ExpressionParser
     private static ExpressionTokenParser Keyword { get; } =
         Token.EqualTo(ExpressionToken.System)
             .Or(Token.EqualTo(ExpressionToken.Aggregate))
+            .Or(Token.EqualTo(ExpressionToken.Description))
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.Events))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
@@ -40,9 +41,16 @@ public static class ExpressionParser
         from keyword in Token.EqualTo(ExpressionToken.Events)
         from array in Array
         select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Events), ((ChildNodes) array).Children);
+    
+    private static ExpressionTokenParser DescriptionCouplet { get; } =
+        from keyword in Token.EqualTo(ExpressionToken.Description)
+        from value in String
+        select (Expression) new CoupletValue(new KeywordValue(Parsing.Keyword.Description), new []{ value });
+
 
     private static ExpressionTokenParser DslValue { get; } =
         EventsCouplet
+            .Or(DescriptionCouplet)
             .Or(KeywordTriplet)
             .Or(String);
 
