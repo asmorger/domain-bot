@@ -15,6 +15,8 @@ public enum ExpressionToken
     [Token(Category = "keyword")] Events,
     [Token(Category = "keyword")] Properties,
     [Token(Category = "keyword")] Raises,
+    [Token(Category = "keyword")] Returns,
+    [Token(Category = "keyword")] Service,
     [Token(Category = "keyword")] ValueObject,
     [Token(Example = "{")] LBracket,
     [Token(Example = "}")] RBracket

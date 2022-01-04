@@ -1,4 +1,5 @@
-﻿using Superpower;
+﻿using System.Linq.Expressions;
+using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
 using Superpower.Tokenizers;
@@ -22,6 +23,7 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
+        .Match(Span.EqualTo("=>"), ExpressionToken.Returns)
         // .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
         // .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
         .MatchKeywords()

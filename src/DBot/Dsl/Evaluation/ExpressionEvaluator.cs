@@ -4,11 +4,11 @@ using DBot.Dsl.Parsing;
 
 namespace DBot.Dsl.Evaluation;
 
-public class ExpressionEvaluator
+public static class ExpressionEvaluator
 {
     public static CodeElement Evaluate(Expression expression)
     {
-        if (expression is not ExpressionWithChildren node)
+        if (expression is not ExpressionWithChildren)
         {
             throw new ArgumentException($"Unsupported expression {expression}.");
         }
@@ -53,6 +53,7 @@ public class ExpressionEvaluator
             Keyword.System => new SoftwareSystem(v.Name.Value),
             Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
             Keyword.Entity => new Entity(v.Name.Value),
+            Keyword.Service => new ServiceListing(v.Name.Value),
             Keyword.ValueObject => new ValueObject(v.Name.Value),
             _ => throw new ArgumentOutOfRangeException()
         },
@@ -60,6 +61,7 @@ public class ExpressionEvaluator
         NameValue => throw new NotImplementedException(),
         ChildNodes => throw new NotImplementedException(),
         KeywordValue => throw new NotImplementedException(),
+        MethodValue x => new ServiceMethod(x.Name.ToString()!, x.ReturnType.ToString()!),
         _ => throw new ArgumentOutOfRangeException(nameof(expression))
     };
 }

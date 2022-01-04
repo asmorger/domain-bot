@@ -28,6 +28,11 @@ system GizmoMaker {
             CreateWhozit raises WhozitCreated
         },
         
+        service WhatzitService {
+            GetByName returns Whatzit,
+            GetById => Whatzit
+        },
+        
         entity Whozit {
             description "It has a face!",
             
