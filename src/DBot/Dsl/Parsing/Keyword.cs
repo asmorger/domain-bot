@@ -14,6 +14,7 @@ public enum Keyword
     Events,
     Properties,
     Raises,
+    Returns,
     Service,
     ValueObject
 }
@@ -28,6 +29,7 @@ public static class ExpressionTextParsers
                 .Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
             .Or(Span.EqualTo("properties").Value(Parsing.Keyword.Properties))
             .Or(Span.EqualTo("raises").Value(Parsing.Keyword.Raises))
+            .Try().Or(Span.EqualTo("returns").Value(Parsing.Keyword.Returns))
             .Or(Span.EqualTo("service").Value(Parsing.Keyword.Service))
             .Try().Or(Span.EqualTo("system").Value(Parsing.Keyword.System))
             .Or(Span.EqualTo("value").Value(Parsing.Keyword.ValueObject));
@@ -42,6 +44,7 @@ public static class ExpressionTextParsers
             .Match(Span.EqualTo("events"), ExpressionToken.Events)
             .Match(Span.EqualTo("properties"), ExpressionToken.Properties)
             .Match(Span.EqualTo("raises"), ExpressionToken.Raises)
+            .Match(Span.EqualTo("returns"), ExpressionToken.Returns)
             .Match(Span.EqualTo("service"), ExpressionToken.Service)
             .Match(Span.EqualTo("value"), ExpressionToken.ValueObject);
 }

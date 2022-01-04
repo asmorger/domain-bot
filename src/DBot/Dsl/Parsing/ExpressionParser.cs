@@ -39,6 +39,7 @@ public static class ExpressionParser
             .Or(Description)
             .Or(PropertiesParsers.Properties)
             .Or(BehaviorsParsers.Behaviors)
+            .Or(ServicesParsers.Services)
             .Or(CodeElementKeyword)
             .Or(UniversalParsers.String);
     
