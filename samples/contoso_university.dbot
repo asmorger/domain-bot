@@ -4,7 +4,7 @@
 # It's also only partially event-sourced, so we can demonstrate how to handle some edge cases in the language usage,
 # as well as providing some good opportunities for analysis.
 # 
-# I also actually like the fact that it has some organization issues - some common items aren't broken out, some entities seem strangly nested, etc.
+# I also actually like the fact that it has some organization issues - some common items aren't broken out, some entities seem strangely nested, etc.
 # While that's not ideal or what one wants to see in a classroom setting, the reality is that it happens all the time in production code bases.
 # Again, this is a great opportunity for analysis.
 
@@ -17,7 +17,7 @@ system "Contoso University" {
             string Name,
             MoneyValue Budget,
             DateTime StartDate,
-            Course[] Courses,
+            Course[] Courses
         },
 
         events {
@@ -146,7 +146,7 @@ system "Contoso University" {
             EditInstructor raises InstructorEditedDomainEvent,
             GetInstructor returns InstructorDto,
             GetInstructors returns InstructorDto[]
-        }
+        },
 
         dto InstructorDto {
             properties {
@@ -182,9 +182,11 @@ system "Contoso University" {
         },
 
         entity Enrollment {
-            Course Course,
-            Student Student,
-            Grade Grade
+            properties {
+                Course Course,
+                Student Student,
+                Grade Grade
+            }
         },
 
         value Grade {
@@ -226,7 +228,7 @@ system "Contoso University" {
     },
 
     value MoneyValue { 
-        proprerties {
+        properties {
             decimal Value,
             string Currency,
             DateTime Moment
