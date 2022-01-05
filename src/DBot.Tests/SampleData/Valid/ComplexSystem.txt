@@ -29,6 +29,13 @@ system GizmoMaker {
             }
         },
         
+        dto WhatzitDto2 {
+            properties {
+                string Name,
+                int ItemCount
+            }
+        },
+        
         entity Whozit {
             description "It has a face!",
             

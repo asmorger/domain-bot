@@ -23,6 +23,7 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
+        .Match(Span.EqualTo("dto"), ExpressionToken.Projection)
         .Match(Span.EqualTo("=>"), ExpressionToken.Returns)
         // .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
         // .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
