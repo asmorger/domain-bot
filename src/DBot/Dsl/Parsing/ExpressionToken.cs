@@ -13,6 +13,7 @@ public enum ExpressionToken
     [Token(Category = "keyword")] Description,
     [Token(Category = "keyword")] Entity,
     [Token(Category = "keyword")] Events,
+    [Token(Category = "keyword")] None,
     [Token(Category = "keyword")] Projection,
     [Token(Category = "keyword")] Properties,
     [Token(Category = "keyword")] Raises,

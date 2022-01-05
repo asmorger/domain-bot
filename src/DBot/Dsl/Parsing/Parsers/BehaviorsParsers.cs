@@ -9,9 +9,10 @@ using ExpressionTokenParser = TokenListParser<ExpressionToken, Expression>;
 public static class BehaviorsParsers
 {
     private static ExpressionTokenParser RaisesTriplet { get; } =
-        Parse.Chain(Token.EqualTo(ExpressionToken.Raises), UniversalParsers.String,
-            (name, behaviorName, eventToBeRaised) =>
-                new RaisesValue(behaviorName, eventToBeRaised));
+        Parse.Chain(
+            Token.EqualTo(ExpressionToken.Raises).Or(Token.EqualTo(ExpressionToken.Returns)), 
+            UniversalParsers.String,
+            (_, behaviorName, eventToBeRaised) => new RaisesValue(behaviorName, eventToBeRaised));
 
     private static ExpressionTokenParser RaisesArray { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)

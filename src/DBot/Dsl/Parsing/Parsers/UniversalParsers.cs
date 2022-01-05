@@ -13,6 +13,7 @@ public static class UniversalParsers
             .Or(Token.EqualTo(ExpressionToken.Description))
             .Or(Token.EqualTo(ExpressionToken.Entity))
             .Or(Token.EqualTo(ExpressionToken.Events))
+            .Or(Token.EqualTo(ExpressionToken.None))
             .Or(Token.EqualTo(ExpressionToken.Projection))
             .Or(Token.EqualTo(ExpressionToken.Properties))
             .Or(Token.EqualTo(ExpressionToken.Raises))
@@ -23,6 +24,6 @@ public static class UniversalParsers
             .Select(id => (Expression) new KeywordValue(id));
 
     public static ExpressionTokenParser String { get; } =
-        Token.EqualTo(ExpressionToken.String)
-            .Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')));
+        Token.EqualTo(ExpressionToken.String).Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')))
+            .Or(Token.EqualTo(ExpressionToken.None).Select(_ => (Expression) new NameValue("none")));
 }
