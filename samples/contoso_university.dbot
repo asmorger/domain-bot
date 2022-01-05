@@ -21,12 +21,13 @@ system "Contoso University" {
         },
 
         events {
+            AdministratorAssignedDomainEvent,
             DepartmentCreatedDomainEvent
         }, 
 
         behaviors {
             AddCourse raises CourseAddedDomainEvent,
-            AssignAdministrator raises none,
+            AssignAdministrator raises AdministratorAssignedDomainEvent,
             CreateDepartment raises DepartmentCreatedDomainEvent,
             DeleteCourse raises none,
             DeleteDepartment raises none,
@@ -176,7 +177,8 @@ system "Contoso University" {
 
         events {
             StudentCreatedDomainEvent,
-            StudentEditedDomainEvent
+            StudentEditedDomainEvent,
+            StudentEnrolledToCourseDomainEvent
         },
 
         entity Enrollment {
