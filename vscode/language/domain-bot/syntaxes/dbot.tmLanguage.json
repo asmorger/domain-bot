@@ -7,6 +7,9 @@
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#comments"
 		}
 	],
 	"repository": {
@@ -24,6 +27,16 @@
 				{
 					"name": "constant.character.escape.dbot",
 					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+				"name": "comment.line.shell-style.dbot",
+				"begin": "#",
+				"end": "\n"
+
 				}
 			]
 		}
