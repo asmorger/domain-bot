@@ -1,0 +1,25 @@
+{
+    "name": "domain-bot",
+    "displayName": "Domain Bot",
+    "description": "Syntax highlighter for the Domain-Bot (dbot) DDD DSL.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "dbot",
+            "aliases": ["Domain Bot", "dbot"],
+            "extensions": [".dbot"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "dbot",
+            "scopeName": "source.dbot",
+            "path": "./syntaxes/dbot.tmLanguage.json"
+        }]
+    }
+}

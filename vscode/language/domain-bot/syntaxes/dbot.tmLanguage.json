@@ -1,0 +1,57 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Domain Bot DSL",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#constants"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.ddd.dbot",
+				"match": "\\b(?i)(aggregate|dto|entity|events|projection|service|system|value)\\b"
+			}
+		]
+		},
+		"strings": {
+			"name": "string.quoted.double.dbot",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.dbot",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+				"name": "comment.line.shell-style.dbot",
+				"begin": "#",
+				"end": "\n"
+
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+			{
+				"name": "constant.language",
+				"match": "\\b(?i)(behaviors|description|none|properties|raises|returns)\\b"
+			}
+		]
+		}
+	},
+	"scopeName": "source.dbot"
+}
