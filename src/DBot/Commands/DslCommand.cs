@@ -9,9 +9,10 @@ using Superpower.Model;
 
 namespace DBot.Commands;
 
-public abstract class DslCommand : Command<SourceFileSettings>
+public abstract class DslCommand<TSettings> : Command<TSettings>
+    where TSettings : SourceFileSettings
 {
-    public override int Execute(CommandContext context, SourceFileSettings settings)
+    public override int Execute(CommandContext context, TSettings settings)
     {
         try
         {
