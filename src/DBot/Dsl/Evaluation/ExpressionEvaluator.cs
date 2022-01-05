@@ -53,6 +53,7 @@ public static class ExpressionEvaluator
             Keyword.System => new SoftwareSystem(v.Name.Value),
             Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
             Keyword.Entity => new Entity(v.Name.Value),
+            Keyword.Projection => new Projection(v.Name.Value),
             Keyword.Service => new ServiceListing(v.Name.Value),
             Keyword.ValueObject => new ValueObject(v.Name.Value),
             _ => throw new ArgumentOutOfRangeException()

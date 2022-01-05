@@ -12,6 +12,7 @@ A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [do
 system GizmoMaker { 
     description "A sample software system",
     
+    # Look Ma! Comment support!
     aggregate Whatzit {
         description "The best selling thing ever!",
         
@@ -30,7 +31,23 @@ system GizmoMaker {
         
         service WhatzitService {
             GetByName returns Whatzit,
+            
+            # '=>' is an alias for 'returns'
             GetById => Whatzit
+        },
+        
+        projection WhatzitDto {
+            properties {
+                string Name,
+                int ItemCount
+            }
+        },
+        
+        # dto is an alias to 'projection'.  They will do the same thing.
+        dto WhatzitDto2 {
+            properties {
+                string Name
+            }
         },
         
         entity Whozit {

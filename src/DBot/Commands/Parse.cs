@@ -56,6 +56,6 @@ public class Parse : DslCommand
         ValueObject => Color.Yellow,
         ServiceListing => Color.Olive,
         ServiceMethod => Color.Olive,
-        _ => throw new ArgumentOutOfRangeException(nameof(element))
+        _ => Color.White
     };
 }

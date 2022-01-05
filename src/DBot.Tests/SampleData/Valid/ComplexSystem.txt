@@ -22,6 +22,20 @@ system GizmoMaker {
             GetById => Whatzit
         },
         
+        projection WhatzitDto {
+            properties {
+                string Name,
+                int ItemCount
+            }
+        },
+        
+        dto WhatzitDto2 {
+            properties {
+                string Name,
+                int ItemCount
+            }
+        },
+        
         entity Whozit {
             description "It has a face!",
             
