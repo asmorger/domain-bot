@@ -9,12 +9,15 @@ using Superpower.Model;
 
 namespace DBot.Commands;
 
-public abstract class DslCommand : Command<SourceFileSettings>
+public abstract class DslCommand<TSettings> : Command<TSettings>
+    where TSettings : SourceFileSettings
 {
-    public override int Execute(CommandContext context, SourceFileSettings settings)
+    public override int Execute(CommandContext context, TSettings settings)
     {
         try
         {
+            Settings = settings;
+            
             var dsl = settings.ReadFile();
 
             if (string.IsNullOrEmpty(dsl))
@@ -49,6 +52,8 @@ public abstract class DslCommand : Command<SourceFileSettings>
     }
 
     protected abstract void Process(CodeElement system);
+
+    protected TSettings Settings { get; private set; } = default!;
 
     static void WriteSyntaxError(string dsl, string message, Position errorPosition)
     {

@@ -3,7 +3,7 @@ using Spectre.Console;
 
 namespace DBot.Commands;
 
-public class Parse : DslCommand
+public class Parse : DslCommand<SourceFileSettings>
 {
     protected override void Process(CodeElement system)
     {
