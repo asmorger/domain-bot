@@ -33,6 +33,13 @@ system GizmoMaker {
             GetById => Whatzit
         },
         
+        projection WhatzitDto {
+            properties {
+                string Name,
+                int ItemCount
+            }
+        },
+        
         entity Whozit {
             description "It has a face!",
             
