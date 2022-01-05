@@ -1,0 +1,241 @@
+# modeled after https://github.com/DarekModzelewski/Contoso-University-DDD
+#
+# I actually really like this as a sample; it was written by a student with a good grasp of the fundamentals, and who followed patterns well.
+# It's also only partially event-sourced, so we can demonstrate how to handle some edge cases in the language usage,
+# as well as providing some good opportunities for analysis.
+# 
+# I also actually like the fact that it has some organization issues - some common items aren't broken out, some entities seem strangly nested, etc.
+# While that's not ideal or what one wants to see in a classroom setting, the reality is that it happens all the time in production code bases.
+# Again, this is a great opportunity for analysis.
+
+system "Contoso University" {
+    description "A sample application that is just big enough to be realistic",
+
+    aggregate Department {
+        properties {
+            Instructor Administrator,
+            string Name,
+            MoneyValue Budget,
+            DateTime StartDate,
+            Course[] Courses,
+        },
+
+        events {
+            DepartmentCreatedDomainEvent
+        }, 
+
+        behaviors {
+            AddCourse raises CourseAddedDomainEvent,
+            AssignAdministrator raises none,
+            CreateDepartment raises DepartmentCreatedDomainEvent,
+            DeleteCourse raises none,
+            DeleteDepartment raises none,
+            EditCourse raises none,
+            EditDepartment raises none,
+
+            GetCourseDetails returns CourseDto,
+            GetCourses returns CourseDto[],
+            GetDepartmentDetails returns DepartmentDto,
+            GetDepartment returns DepartmentDto
+        },
+
+        dto CourseDto {
+            properties {
+                Guid Id,
+                string Title,
+                string Credits,
+                EnrollmentDto Enrollments,
+                AssignmentDto Assignments
+            },
+
+            # Renamed from his overload of domain names in the DTO layer
+            dto EnrollmentDto {
+                properties {
+                    string FirstName,
+                    string Lastname
+                }
+            },
+
+            # Renamed from his overload of domain names in the DTO layer
+            dto AssignmentDto {
+                properties {
+                    string FirstName,
+                    string Lastname
+                }
+            }
+        },
+
+        dto DepartmentDto {
+            properties {
+                Guid Id,
+                string Administrator,
+                string Name,
+                string Currency,
+                decimal Budget,
+                DateTime StartDate,
+
+                CourseDto[] Courses
+            },
+
+            # Renamed from his overload of domain names in the DTO layer
+            dto CourseDto {
+                properties {
+                    string Title,
+                    int Credits
+                }
+            }
+        },
+
+        entity Course {
+            properties {
+                string Title,
+                int Credits,
+
+                # navigation property
+                Department Department,
+
+                # Do we really want this aggregate to reference entities in a different aggregate?
+                Enrollment[] StudentEnrollments,
+                Assignment[] InstructorAssignments
+            },
+
+            events {
+                CourseAddedDomainEvent
+            }
+        }
+    },
+
+    aggregate Instructor {
+        properties {
+            PersonName PersonName,
+            DateTime HireDate,
+            OfficeLocation OfficeLocation,
+            Assignment[] Assignments
+        },
+
+        events {
+            InstructorCreatedDomainEvent,
+            InstructorEditedDomainEvent,
+            InstructorAssignedToOfficeDomainEvent
+        },
+
+        entity Assignment {
+            properties {
+                Instructor Instructor,
+                Course Course
+            },
+
+            events {
+                InstructorAssignedToCourseDomainEvent
+            }
+        },
+
+        value OfficeLocation {
+            properties {
+                string Address,
+                string PostalCode,
+                string City
+            }
+        },
+
+        behaviors {
+            AssignInstructorToOffice raises InstructorAssignedToOfficeDomainEvent,
+            CreateInstructor raises InstructorCreatedDomainEvent,
+            DeleteInstructor raises none,
+            EditInstructor raises InstructorEditedDomainEvent,
+            GetInstructor returns InstructorDto,
+            GetInstructors returns InstructorDto[]
+        }
+
+        dto InstructorDto {
+            properties {
+                Guid Id,
+                string FirstName,
+                string LastName,
+                DateTime HireDate,
+
+                InstructorCourseDto[] Courses
+            },
+
+            # Renamed from his overload of domain names in the DTO layer
+            dto InstructorCourseDto {
+                properties {
+                    string Title
+                }
+            }
+        }
+    },
+
+    aggregate Student {
+        properties {
+            PersonName PersonName,
+            DateTime EnrollmentDate,
+            DateTime CreateDate,
+            Enrollments[] Enrollments
+        },
+
+        events {
+            StudentCreatedDomainEvent,
+            StudentEditedDomainEvent
+        },
+
+        entity Enrollment {
+            Course Course,
+            Student Student,
+            Grade Grade
+        },
+
+        value Grade {
+            properties {
+                Grade A,
+                Grade B,
+                Grade C,
+                Grade D,
+                Grade F
+            }
+        },
+
+        behaviors {
+            CreateStudent raises StudentCreatedDomainEvent,
+            DeleteStudent raises none,
+            EditStudent raises StudentEditedDomainEvent,
+            GetStudentDetails returns StudentDto,
+            GetStudentsByPage returns StudentDto[]
+        },
+
+        dto StudentDto {
+            properties {
+                Guid Id,
+                string FirstName,
+                string LastName,
+                DateTime EnrollmentDate,
+
+                StudentEnrollmentDto[] Enrollments
+            },
+
+            # Renamed from his overload of domain names in the DTO layer
+            dto StudentEnrollmentDto {
+                properties {
+                    string Title,
+                    string Grade
+                }
+            }
+        }
+    },
+
+    value MoneyValue { 
+        proprerties {
+            decimal Value,
+            string Currency,
+            DateTime Moment
+        }
+    },
+    value PersonName { 
+        properties {
+            string First,
+            string Last,
+            string Full,
+            string Reversed
+        }
+    }
+}
