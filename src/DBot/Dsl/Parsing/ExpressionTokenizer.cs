@@ -20,6 +20,7 @@ public static class ExpressionTokenizer
         select Unit.Value;
 
     private static Tokenizer<ExpressionToken> Tokenizer { get; } = new TokenizerBuilder<ExpressionToken>()
+        .Ignore(Comment.ShellStyle)
         .Match(Character.EqualTo('{'), ExpressionToken.LBracket)
         .Match(Character.EqualTo('}'), ExpressionToken.RBracket)
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
@@ -31,6 +32,7 @@ public static class ExpressionTokenizer
         .Match(QuotedString, ExpressionToken.String)
         .Match(NonWhiteSpaceNonComma, ExpressionToken.String)
         .Ignore(Span.WhiteSpace)
+        
         .Build();
     
     public static Result<TokenList<ExpressionToken>> TryTokenize(string source) =>
