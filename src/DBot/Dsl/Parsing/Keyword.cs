@@ -6,7 +6,6 @@ namespace DBot.Dsl.Parsing;
 
 public enum Keyword
 {
-    System,
     AggregateRoot,
     Behaviors,
     Description,
@@ -18,6 +17,7 @@ public enum Keyword
     Raises,
     Returns,
     Service,
+    System,
     ValueObject
 }
 public static class ExpressionTextParsers
