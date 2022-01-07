@@ -1,4 +1,4 @@
-﻿namespace DBot.Commands;
+﻿namespace DBot.Commands.Common;
 
 public enum ExitCodes
 {

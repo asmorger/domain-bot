@@ -7,7 +7,7 @@ using Superpower.Model;
 
 #pragma warning disable CS8765
 
-namespace DBot.Commands;
+namespace DBot.Commands.Common;
 
 public abstract class DslCommand<TSettings> : Command<TSettings>
     where TSettings : SourceFileSettings

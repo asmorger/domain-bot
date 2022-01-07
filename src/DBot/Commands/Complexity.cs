@@ -1,4 +1,5 @@
 ﻿using DBot.Analyzers;
+using DBot.Commands.Common;
 using DBot.Domain;
 using Spectre.Console;
 using Spectre.Console.Cli;
