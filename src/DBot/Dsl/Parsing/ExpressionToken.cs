@@ -14,6 +14,8 @@ public enum ExpressionToken
     [Token(Category = "keyword")] Entity,
     [Token(Category = "keyword")] Events,
     [Token(Category = "keyword")] None,
+    [Token(Example = "->")] OneToManyRelationship,
+    [Token(Example = "-|")] OneToOneRelationship,
     [Token(Category = "keyword")] Projection,
     [Token(Category = "keyword")] Structure,
     [Token(Category = "keyword")] Raises,

@@ -26,6 +26,8 @@ public static class ExpressionTokenizer
         .Match(Character.EqualTo(','), ExpressionToken.Comma)
         .Match(Span.EqualTo("dto"), ExpressionToken.Projection)
         .Match(Span.EqualTo("=>"), ExpressionToken.Returns)
+        .Match(Span.EqualTo("->"), ExpressionToken.OneToManyRelationship)
+        .Match(Span.EqualTo("-|"), ExpressionToken.OneToOneRelationship)
         // .Match(Character.EqualTo('\n'), ExpressionToken.NewLine)
         // .Match(Span.EqualTo("\r\n"), ExpressionToken.NewLine)
         .MatchKeywords()

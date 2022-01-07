@@ -16,8 +16,11 @@ system "Contoso University" {
             Instructor Administrator,
             string Name,
             MoneyValue Budget,
-            DateTime StartDate,
-            Course[] Courses
+            DateTime StartDate
+        },
+        
+        relationships {
+            -> Course
         },
 
         events {
@@ -44,9 +47,12 @@ system "Contoso University" {
             structure {
                 Guid Id,
                 string Title,
-                string Credits,
-                EnrollmentDto Enrollments,
-                AssignmentDto Assignments
+                string Credits
+            },
+            
+            relationships {
+                -| EnrollmentDto,
+                -| AssignmentDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
@@ -73,9 +79,11 @@ system "Contoso University" {
                 string Name,
                 string Currency,
                 decimal Budget,
-                DateTime StartDate,
-
-                CourseDto[] Courses
+                DateTime StartDate
+            },
+            
+            relationships {
+                -> CourseDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
@@ -90,14 +98,7 @@ system "Contoso University" {
         entity Course {
             structure {
                 string Title,
-                int Credits,
-
-                # navigation property
-                Department Department,
-
-                # Do we really want this aggregate to reference entities in a different aggregate?
-                Enrollment[] StudentEnrollments,
-                Assignment[] InstructorAssignments
+                int Credits
             },
 
             events {
@@ -110,8 +111,11 @@ system "Contoso University" {
         structure {
             PersonName PersonName,
             DateTime HireDate,
-            OfficeLocation OfficeLocation,
-            Assignment[] Assignments
+            OfficeLocation OfficeLocation
+        },
+        
+        relationships {
+            -> Assignment
         },
 
         events {
@@ -153,9 +157,11 @@ system "Contoso University" {
                 Guid Id,
                 string FirstName,
                 string LastName,
-                DateTime HireDate,
-
-                InstructorCourseDto[] Courses
+                DateTime HireDate
+            },
+            
+            relationships {
+                -> InstructorCourseDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
@@ -171,8 +177,11 @@ system "Contoso University" {
         structure {
             PersonName PersonName,
             DateTime EnrollmentDate,
-            DateTime CreateDate,
-            Enrollments[] Enrollments
+            DateTime CreateDate
+        },
+        
+        relationships {
+            -> Enrollment
         },
 
         events {
@@ -212,9 +221,11 @@ system "Contoso University" {
                 Guid Id,
                 string FirstName,
                 string LastName,
-                DateTime EnrollmentDate,
-
-                StudentEnrollmentDto[] Enrollments
+                DateTime EnrollmentDate
+            },
+            
+            relationships {
+                -> StudentEnrollmentDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
