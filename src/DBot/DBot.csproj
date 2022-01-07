@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Scriban" Version="5.0.0" />
       <PackageReference Include="Spectre.Console" Version="0.43.0" />
       <PackageReference Include="Superpower" Version="3.0.0" />
     </ItemGroup>
@@ -20,6 +21,10 @@
       <Content Include="Sample.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\Diagrams\Generators" />
     </ItemGroup>
 
 </Project>

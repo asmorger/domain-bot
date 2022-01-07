@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using Spectre.Console.Cli;
 
-namespace DBot.Commands;
+namespace DBot.Commands.Common;
 
 public class SourceFileSettings : CommandSettings
 {

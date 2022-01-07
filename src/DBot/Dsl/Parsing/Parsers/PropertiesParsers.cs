@@ -21,7 +21,7 @@ public class PropertiesParsers
         select (Expression) new ChildNodes(values);
     
     public static ExpressionTokenParser Properties { get; } =
-        from keyword in Token.EqualTo(ExpressionToken.Properties)
+        from keyword in Token.EqualTo(ExpressionToken.Structure)
         from array in PropertiesArray
-        select (Expression) new CoupletValue(new KeywordValue(Keyword.Properties), ((ChildNodes) array).Children);
+        select (Expression) new CoupletValue(new KeywordValue(Keyword.Structure), ((ChildNodes) array).Children);
 }

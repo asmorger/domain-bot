@@ -16,12 +16,18 @@ system GizmoMaker {
     aggregate Whatzit {
         description "The best selling thing ever!",
         
-        properties {
+        structure {
             string Name,
-            int ItemCount,
-            Whozit[] Whozits,
-            Thingamajig[] Thingamajigs,
-            Dohickey Dohickey
+            int ItemCount
+        },
+        
+        relationships {
+            # one to many
+            -> Whozit,
+            -> Thingamajig,
+            
+            # one to one
+            -| Dohicky
         },
         
         behaviors {
@@ -45,7 +51,7 @@ system GizmoMaker {
         
         # dto is an alias to 'projection'.  They will do the same thing.
         dto WhatzitDto2 {
-            properties {
+            structure {
                 string Name
             }
         },
@@ -53,7 +59,7 @@ system GizmoMaker {
         entity Whozit {
             description "It has a face!",
             
-            properties {
+            structure {
                 string Name,
                 string ModeledAfter
             },

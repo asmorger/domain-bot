@@ -46,7 +46,8 @@ public static class ExpressionEvaluator
             Keyword.Behaviors => new BehaviorListing(v.Children.Cast<RaisesValue>().Select(x => new Behavior(x.BehaviorName.ToString()!, x.EventName.ToString()!))),
             Keyword.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
             Keyword.Description => new Description(v.Children.First().ToString()!),
-            Keyword.Properties => new PropertyListing(v.Children.Select(x => new Property(x.ToString()!))),
+            Keyword.Structure => new PropertyListing(v.Children.Select(x => new Property(x.ToString()!))),
+            Keyword.Relationships => new RelationshipListing(v.Children.Cast<RelationshipValue>().Select(x => new Relationship(x.Type, x.Target.ToString()!))),
             _ => throw new ArgumentOutOfRangeException()
         },
         TripletValue v => v.Keyword.Value switch {
