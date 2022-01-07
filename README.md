@@ -18,10 +18,16 @@ system GizmoMaker {
         
         structure {
             string Name,
-            int ItemCount,
-            Whozit[] Whozits,
-            Thingamajig[] Thingamajigs,
-            Dohickey Dohickey
+            int ItemCount
+        },
+        
+        relationships {
+            # one to many
+            -> Whozit,
+            -> Thingamajig,
+            
+            # one to one
+            -| Dohicky
         },
         
         behaviors {
