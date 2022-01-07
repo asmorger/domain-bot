@@ -5,7 +5,7 @@ namespace DBot.Commands.Diagrams;
 
 public class DiagramSettings : SourceFileSettings
 {
-    [CommandOption("-f|--format")] public DiagramFormat DiagramFormat { get; set; } = DiagramFormat.Mermaid;
+    [CommandArgument(1, "[format]")] public DiagramFormat DiagramFormat { get; set; } = DiagramFormat.Mermaid;
 }
 
 public enum DiagramFormat

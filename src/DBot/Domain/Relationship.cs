@@ -16,8 +16,8 @@ public class Relationship : CodeElement
     
     public enum RelationshipType
     {
-        ManyToMany,
         OneToMany,
+        OneToOne,
     }
 }
 

@@ -17,7 +17,7 @@ public class RelationshipValue : Expression
     private static Relationship.RelationshipType Convert(ExpressionToken token) => token switch
     {
         ExpressionToken.OneToManyRelationship => Relationship.RelationshipType.OneToMany,
-        ExpressionToken.OneToOneRelationship => Relationship.RelationshipType.ManyToMany,
+        ExpressionToken.OneToOneRelationship => Relationship.RelationshipType.OneToOne,
         _ => throw new ArgumentOutOfRangeException(nameof(token), token, null)
     };
 }

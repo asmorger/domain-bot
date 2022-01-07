@@ -12,12 +12,15 @@ system "Contoso University" {
     description "A sample application that is just big enough to be realistic",
 
     aggregate Department {
-        properties {
+        structure {
             Instructor Administrator,
             string Name,
             MoneyValue Budget,
-            DateTime StartDate,
-            Course[] Courses
+            DateTime StartDate
+        },
+        
+        relationships {
+            -> Course
         },
 
         events {
@@ -41,17 +44,20 @@ system "Contoso University" {
         },
 
         dto CourseDto {
-            properties {
+            structure {
                 Guid Id,
                 string Title,
-                string Credits,
-                EnrollmentDto Enrollments,
-                AssignmentDto Assignments
+                string Credits
+            },
+            
+            relationships {
+                -| EnrollmentDto,
+                -| AssignmentDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
             dto EnrollmentDto {
-                properties {
+                structure {
                     string FirstName,
                     string Lastname
                 }
@@ -59,7 +65,7 @@ system "Contoso University" {
 
             # Renamed from his overload of domain names in the DTO layer
             dto AssignmentDto {
-                properties {
+                structure {
                     string FirstName,
                     string Lastname
                 }
@@ -67,20 +73,22 @@ system "Contoso University" {
         },
 
         dto DepartmentDto {
-            properties {
+            structure {
                 Guid Id,
                 string Administrator,
                 string Name,
                 string Currency,
                 decimal Budget,
-                DateTime StartDate,
-
-                CourseDto[] Courses
+                DateTime StartDate
+            },
+            
+            relationships {
+                -> CourseDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
             dto CourseDto {
-                properties {
+                structure {
                     string Title,
                     int Credits
                 }
@@ -88,16 +96,9 @@ system "Contoso University" {
         },
 
         entity Course {
-            properties {
+            structure {
                 string Title,
-                int Credits,
-
-                # navigation property
-                Department Department,
-
-                # Do we really want this aggregate to reference entities in a different aggregate?
-                Enrollment[] StudentEnrollments,
-                Assignment[] InstructorAssignments
+                int Credits
             },
 
             events {
@@ -107,11 +108,14 @@ system "Contoso University" {
     },
 
     aggregate Instructor {
-        properties {
+        structure {
             PersonName PersonName,
             DateTime HireDate,
-            OfficeLocation OfficeLocation,
-            Assignment[] Assignments
+            OfficeLocation OfficeLocation
+        },
+        
+        relationships {
+            -> Assignment
         },
 
         events {
@@ -121,9 +125,8 @@ system "Contoso University" {
         },
 
         entity Assignment {
-            properties {
-                Instructor Instructor,
-                Course Course
+            relationships {
+                -| Course
             },
 
             events {
@@ -132,7 +135,7 @@ system "Contoso University" {
         },
 
         value OfficeLocation {
-            properties {
+            structure {
                 string Address,
                 string PostalCode,
                 string City
@@ -149,18 +152,20 @@ system "Contoso University" {
         },
 
         dto InstructorDto {
-            properties {
+            structure {
                 Guid Id,
                 string FirstName,
                 string LastName,
-                DateTime HireDate,
-
-                InstructorCourseDto[] Courses
+                DateTime HireDate
+            },
+            
+            relationships {
+                -> InstructorCourseDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
             dto InstructorCourseDto {
-                properties {
+                structure {
                     string Title
                 }
             }
@@ -168,11 +173,14 @@ system "Contoso University" {
     },
 
     aggregate Student {
-        properties {
+        structure {
             PersonName PersonName,
             DateTime EnrollmentDate,
-            DateTime CreateDate,
-            Enrollments[] Enrollments
+            DateTime CreateDate
+        },
+        
+        relationships {
+            -> Enrollment
         },
 
         events {
@@ -182,15 +190,17 @@ system "Contoso University" {
         },
 
         entity Enrollment {
-            properties {
-                Course Course,
-                Student Student,
+            structure {
                 Grade Grade
+            },
+            
+            relationships {
+               -| Course
             }
         },
 
         value Grade {
-            properties {
+            structure {
                 Grade A,
                 Grade B,
                 Grade C,
@@ -208,18 +218,20 @@ system "Contoso University" {
         },
 
         dto StudentDto {
-            properties {
+            structure {
                 Guid Id,
                 string FirstName,
                 string LastName,
-                DateTime EnrollmentDate,
-
-                StudentEnrollmentDto[] Enrollments
+                DateTime EnrollmentDate
+            },
+            
+            relationships {
+                -> StudentEnrollmentDto
             },
 
             # Renamed from his overload of domain names in the DTO layer
             dto StudentEnrollmentDto {
-                properties {
+                structure {
                     string Title,
                     string Grade
                 }
@@ -228,14 +240,14 @@ system "Contoso University" {
     },
 
     value MoneyValue { 
-        properties {
+        structure {
             decimal Value,
             string Currency,
             DateTime Moment
         }
     },
     value PersonName { 
-        properties {
+        structure {
             string First,
             string Last,
             string Full,

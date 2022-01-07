@@ -5,11 +5,13 @@ namespace DBot.Domain;
 [DebuggerDisplay("Property: {Name}")]
 public class Property : CodeElement
 {
-    public Property(string name)
+    public Property(string type, string name)
     {
+        Type = type;
         Name = name;
     }
 
+    public string Type { get; }
     public string Name { get; }
 }
 
