@@ -15,6 +15,7 @@ public enum Keyword
     Projection,
     Structure,
     Raises,
+    Relationships,
     Returns,
     Service,
     System,
@@ -32,6 +33,7 @@ public static class ExpressionTextParsers
             .Or(Span.EqualTo("none").Value(Parsing.Keyword.None))
             .Or(Span.EqualTo("projection").Value(Parsing.Keyword.Projection))
             .Or(Span.EqualTo("raises").Value(Parsing.Keyword.Raises))
+            .Try().Or(Span.EqualTo("relationships").Value(Parsing.Keyword.Relationships))
             .Try().Or(Span.EqualTo("returns").Value(Parsing.Keyword.Returns))
             .Or(Span.EqualTo("service").Value(Parsing.Keyword.Service))
             .Try().Or(Span.EqualTo("structure").Value(Parsing.Keyword.Structure))
@@ -50,6 +52,7 @@ public static class ExpressionTextParsers
             .Match(Span.EqualTo("none"), ExpressionToken.None)
             .Match(Span.EqualTo("projection"), ExpressionToken.Projection)
             .Match(Span.EqualTo("raises"), ExpressionToken.Raises)
+            .Match(Span.EqualTo("relationships"), ExpressionToken.Relationships)
             .Match(Span.EqualTo("returns"), ExpressionToken.Returns)
             .Match(Span.EqualTo("service"), ExpressionToken.Service)
             .Match(Span.EqualTo("structure"), ExpressionToken.Structure)

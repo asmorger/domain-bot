@@ -17,6 +17,7 @@ public enum ExpressionToken
     [Token(Category = "keyword")] Projection,
     [Token(Category = "keyword")] Structure,
     [Token(Category = "keyword")] Raises,
+    [Token(Category = "keyword")] Relationships,
     [Token(Category = "keyword")] Returns,
     [Token(Category = "keyword")] Service,
     [Token(Category = "keyword")] ValueObject,

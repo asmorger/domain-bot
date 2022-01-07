@@ -17,6 +17,7 @@ public static class UniversalParsers
             .Or(Token.EqualTo(ExpressionToken.Projection))
             .Or(Token.EqualTo(ExpressionToken.Structure))
             .Or(Token.EqualTo(ExpressionToken.Raises))
+            .Or(Token.EqualTo(ExpressionToken.Relationships))
             .Or(Token.EqualTo(ExpressionToken.Service))
             .Or(Token.EqualTo(ExpressionToken.System))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
