@@ -13,7 +13,7 @@ public enum Keyword
     Events,
     None,
     Projection,
-    Properties,
+    Structure,
     Raises,
     Returns,
     Service,
@@ -31,10 +31,10 @@ public static class ExpressionTextParsers
             .Try().Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
             .Or(Span.EqualTo("none").Value(Parsing.Keyword.None))
             .Or(Span.EqualTo("projection").Value(Parsing.Keyword.Projection))
-            .Try().Or(Span.EqualTo("properties").Value(Parsing.Keyword.Properties))
             .Or(Span.EqualTo("raises").Value(Parsing.Keyword.Raises))
             .Try().Or(Span.EqualTo("returns").Value(Parsing.Keyword.Returns))
             .Or(Span.EqualTo("service").Value(Parsing.Keyword.Service))
+            .Try().Or(Span.EqualTo("structure").Value(Parsing.Keyword.Structure))
             .Try().Or(Span.EqualTo("system").Value(Parsing.Keyword.System))
             .Or(Span.EqualTo("value").Value(Parsing.Keyword.ValueObject));
 
@@ -49,9 +49,9 @@ public static class ExpressionTextParsers
             .Match(Span.EqualTo("events"), ExpressionToken.Events)
             .Match(Span.EqualTo("none"), ExpressionToken.None)
             .Match(Span.EqualTo("projection"), ExpressionToken.Projection)
-            .Match(Span.EqualTo("properties"), ExpressionToken.Properties)
             .Match(Span.EqualTo("raises"), ExpressionToken.Raises)
             .Match(Span.EqualTo("returns"), ExpressionToken.Returns)
             .Match(Span.EqualTo("service"), ExpressionToken.Service)
+            .Match(Span.EqualTo("structure"), ExpressionToken.Structure)
             .Match(Span.EqualTo("value"), ExpressionToken.ValueObject);
 }
