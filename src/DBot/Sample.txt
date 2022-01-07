@@ -125,9 +125,8 @@ system "Contoso University" {
         },
 
         entity Assignment {
-            structure {
-                Instructor Instructor,
-                Course Course
+            relationships {
+                -| Course
             },
 
             events {
@@ -192,9 +191,11 @@ system "Contoso University" {
 
         entity Enrollment {
             structure {
-                Course Course,
-                Student Student,
                 Grade Grade
+            },
+            
+            relationships {
+               -| Course
             }
         },
 

@@ -56,4 +56,32 @@ public class Entity : BaseHierarchicalCodeElement
             }
         }
     }
+
+    public IEnumerable<Property> GetProperties()
+    {
+        foreach (var child in _elements)
+        {
+            if (child is PropertyListing listing)
+            {
+                foreach (var e in listing)
+                {
+                    yield return (Property)e;
+                }
+            }
+        }
+    }
+    
+    public IEnumerable<Relationship> GetRelationships()
+    {
+        foreach (var child in _elements)
+        {
+            if (child is RelationshipListing listing)
+            {
+                foreach (var e in listing)
+                {
+                    yield return (Relationship)e;
+                }
+            }
+        }
+    }
 }
