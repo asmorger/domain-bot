@@ -18,12 +18,12 @@ public class ValidDsls : DataAttribute
 
     private IEnumerable<string> GetFileContent()
     {
-        yield return ReadEmbeddedFile("EmptySystem.txt");
-        yield return ReadEmbeddedFile("SimpleSystem.txt");
-        yield return ReadEmbeddedFile("ComplexSystem.txt");
+        yield return "EmptySystem.txt";
+        yield return "SimpleSystem.txt";
+        yield return "ComplexSystem.txt";
     }
 
-    private string ReadEmbeddedFile(string fileName)
+    public static string ReadEmbeddedFile(string fileName)
     {
         var assembly = Assembly.GetExecutingAssembly();
         var targetItem = assembly.GetManifestResourceNames().First(x => x.EndsWith(fileName));
