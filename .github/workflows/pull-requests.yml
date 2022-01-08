@@ -22,13 +22,16 @@ jobs:
         uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: "America/Chicago"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d')"
       - name: Set version
         run: |
-          echo "VERSION=$(date +'%Y.%m.%d').${{github.run_number}}" >> $GITHUB_ENV
+          echo "VERSION=${{steps.date.outputs.date}}.${{github.run_number}}" >> $GITHUB_ENV
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore --version ${VERSION}
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore --version ${env.VERSION}
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Upload Test Results
