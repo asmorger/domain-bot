@@ -8,6 +8,8 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>d-bot</ToolCommandName>
         <PackageId>DomainBot</PackageId>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Andrew Morger</Authors>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,0 +1,40 @@
+name: pull-requests
+
+on: 
+  push:
+
+jobs:
+  ubuntu-18_04:
+    name: ubuntu-18_04
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+        name: Checkout PR
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+      - uses: actions/setup-dotnet@v1
+        name: Install .Net Core 6
+        with:
+          dotnet-version: '6.x.x'
+      - name: Set Timezone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "America/Chicago"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d')"
+      - name: Set version
+        run: |
+          echo "VERSION=${{steps.date.outputs.date}}.${{github.run_number}}" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: dotnet restore ./src/DBot.sln
+      - name: Build
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:VersionPrefix=${{env.VERSION}} --version-suffix -alpha
+      - name: Test
+        run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
+      - name: Pack
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: dotnet pack ./src/DBot.sln
+      - name: Publish
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} 
