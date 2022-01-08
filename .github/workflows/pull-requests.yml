@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore --version ${{env.VERSION}}
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:Version=${{env.VERSION}}
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Upload Test Results
