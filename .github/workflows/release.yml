@@ -2,8 +2,6 @@ name: pull-requests
 
 on: 
   push:
-    branches-ignore:
-      - main
 
 jobs:
   ubuntu-18_04:
@@ -31,13 +29,11 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:Version=${{env.VERSION}}
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:VersionPrefix=${{env.VERSION}}
       - name: Test
         run: dotnet test ./src/DBot.sln --no-build --logger trx --results-directory "TestResults"
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: dotnet-results
-          path: TestResults
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+      - name: Pack
+        run: dotnet pack ./src/DBot.sln
+      - name: Publish
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} --version-suffix -beta
