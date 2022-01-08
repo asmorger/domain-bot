@@ -29,10 +29,12 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:VersionPrefix=${{env.VERSION}}
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:VersionPrefix=${{env.VERSION}} --version-suffix -alpha
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Pack
-        run: dotnet pack ./src/DBot.sln --version-suffix -beta
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: dotnet pack ./src/DBot.sln
       - name: Publish
+        if: startsWith(github.ref, 'refs/heads/release')
         run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} 
