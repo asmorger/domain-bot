@@ -19,11 +19,11 @@ jobs:
         with:
           dotnet-version: '6.x.x'
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore
       - name: Test
-        run: dotnet test --logger trx --results-directory "TestResults"
+        run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Upload Test Results
         uses: actions/upload-artifact@v2
         with:
