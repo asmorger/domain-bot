@@ -1,15 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DBot.Dsl.Expressions;
 using DBot.Dsl.Parsing.Parsers;
-using Superpower.Model;
 using ExpressionTokenParser = Superpower.TokenListParser<DBot.Dsl.Parsing.ExpressionToken, DBot.Dsl.Expressions.Expression>;
 
 namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
-    private static readonly ExpressionTokenParser DslValue = Dsl.Named("DSL value");
-
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
         from values in Parse.Ref(() => Dsl!)
@@ -42,7 +39,7 @@ public static class ExpressionParser
             .Or(CodeElementKeyword)
             .Or(UniversalParsers.String);
 
-    private static ExpressionTokenParser Source { get; } = DslValue.AtEnd();
+    private static ExpressionTokenParser Source { get; } = Dsl.Named("DSL value").AtEnd();
 
     public static bool TryParse(TokenList<ExpressionToken> tokens, [NotNullWhen(true)] out Expression? expr,
         [NotNullWhen(false)] out string? error, out Position errorPosition)

@@ -1,6 +1,4 @@
-﻿using Superpower.Display;
-
-namespace DBot.Dsl.Parsing;
+﻿namespace DBot.Dsl.Parsing;
 
 public enum ExpressionToken
 {
