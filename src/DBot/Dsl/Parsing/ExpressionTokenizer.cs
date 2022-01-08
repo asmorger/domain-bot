@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Superpower;
+﻿using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
 using Superpower.Tokenizers;
@@ -8,9 +7,9 @@ namespace DBot.Dsl.Parsing;
 
 public static class ExpressionTokenizer
 {
-    private static TextParser<TextSpan> NonWhiteSpaceNonComma { get; } = 
-        Span.WithoutAny(x => char.IsWhiteSpace(x) || x == ',' );
-    
+    private static TextParser<TextSpan> NonWhiteSpaceNonComma { get; } =
+        Span.WithoutAny(x => char.IsWhiteSpace(x) || x == ',');
+
     private static TextParser<Unit> QuotedString { get; } =
         from open in Character.EqualTo('"')
         from content in Character.EqualTo('\\').IgnoreThen(Character.AnyChar).Value(Unit.Value).Try()
@@ -34,9 +33,8 @@ public static class ExpressionTokenizer
         .Match(QuotedString, ExpressionToken.String)
         .Match(NonWhiteSpaceNonComma, ExpressionToken.String)
         .Ignore(Span.WhiteSpace)
-        
         .Build();
-    
+
     public static Result<TokenList<ExpressionToken>> TryTokenize(string source) =>
         Tokenizer.TryTokenize(source);
 }

@@ -10,7 +10,7 @@ public class RelationshipValue : Expression
         Type = Convert(token);
         Target = relationshipTarget;
     }
-    
+
     public Relationship.RelationshipType Type { get; }
     public Expression Target { get; }
 

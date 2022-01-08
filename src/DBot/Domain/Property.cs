@@ -24,7 +24,7 @@ public class PropertyListing : BaseHierarchicalCodeElement
 
     public PropertyListing(IEnumerable<CodeElement> elements) : this()
     {
-        foreach (var element in elements)
+        foreach(var element in elements)
         {
             AddChild(element);
         }

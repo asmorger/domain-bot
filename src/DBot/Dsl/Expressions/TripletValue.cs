@@ -18,14 +18,12 @@ public class TripletValue : Expression, ExpressionWithChildren
 
 public class ChildNodes : Expression, ExpressionWithChildren
 {
-    public ChildNodes(Expression[] children)
-    {
-        Children = children;
-    }
+    public ChildNodes(Expression[] children) => Children = children;
+
+    public int Count => Children.Length;
 
     public Expression[] Children { get; init; }
-    public int Count => Children.Length;
     public bool HasChildren() => Children.Any();
-    
+
     public override string ToString() => $"{Count} items";
 }

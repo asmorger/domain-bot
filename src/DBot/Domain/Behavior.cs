@@ -11,8 +11,9 @@ public class Behavior : CodeElement
         EventToBeRaised = eventToBeRaised;
     }
 
-    public string Name { get; }
     public string EventToBeRaised { get; }
+
+    public string Name { get; }
 }
 
 [DebuggerDisplay("behaviors")]
@@ -24,7 +25,7 @@ public class BehaviorListing : BaseHierarchicalCodeElement
 
     public BehaviorListing(IEnumerable<CodeElement> elements) : this()
     {
-        foreach (var element in elements)
+        foreach(var element in elements)
         {
             AddChild(element);
         }

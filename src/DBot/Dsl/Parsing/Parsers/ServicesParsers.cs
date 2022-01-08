@@ -3,6 +3,7 @@ using Superpower;
 using Superpower.Parsers;
 
 namespace DBot.Dsl.Parsing.Parsers;
+
 using ExpressionTokenParser = TokenListParser<ExpressionToken, Expression>;
 
 public class ServicesParsers
@@ -17,12 +18,11 @@ public class ServicesParsers
         from values in Parse.Ref(() => MethodValues)
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma),
                 Token.EqualTo(ExpressionToken.RBracket))
-        select (Expression) new ChildNodes(values);
+        select (Expression)new ChildNodes(values);
 
     public static ExpressionTokenParser Services { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Service)
         from serviceName in UniversalParsers.String
         from value in ServiceArray
-        select (Expression) new TripletValue(new KeywordValue(Keyword.Service), (NameValue)serviceName, ((ChildNodes) value).Children);
-
+        select (Expression)new TripletValue(new KeywordValue(Keyword.Service), (NameValue)serviceName, ((ChildNodes)value).Children);
 }

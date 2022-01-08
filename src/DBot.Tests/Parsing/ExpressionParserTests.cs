@@ -20,6 +20,5 @@ public class ExpressionParserTests
         error.Should().BeNull();
         result.Should().BeTrue();
         expr.Should().NotBeNull();
-        
     }
 }

@@ -2,10 +2,7 @@
 
 public class NameValue : Expression
 {
-    public NameValue(string value)
-    {
-        Value = value;
-    }
+    public NameValue(string value) => Value = value;
 
     public string Value { get; init; }
 

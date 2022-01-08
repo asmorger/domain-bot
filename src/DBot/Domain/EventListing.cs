@@ -11,7 +11,7 @@ public class EventListing : BaseHierarchicalCodeElement
 
     public EventListing(IEnumerable<CodeElement> elements) : this()
     {
-        foreach (var element in elements)
+        foreach(var element in elements)
         {
             AddChild(element);
         }
@@ -21,10 +21,7 @@ public class EventListing : BaseHierarchicalCodeElement
 [DebuggerDisplay("Event: {Name}")]
 public class Event : CodeElement
 {
-    public string Name { get; }
+    public Event(string name) => Name = name;
 
-    public Event(string name)
-    {
-        Name = name;
-    }
+    public string Name { get; }
 }

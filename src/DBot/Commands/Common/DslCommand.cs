@@ -12,15 +12,17 @@ namespace DBot.Commands.Common;
 public abstract class DslCommand<TSettings> : Command<TSettings>
     where TSettings : SourceFileSettings
 {
+    protected TSettings Settings { get; private set; } = default!;
+
     public override int Execute(CommandContext context, TSettings settings)
     {
         try
         {
             Settings = settings;
-            
+
             var dsl = settings.ReadFile();
 
-            if (string.IsNullOrEmpty(dsl))
+            if(string.IsNullOrEmpty(dsl))
             {
                 AnsiConsole.MarkupLine("[red]File cannot be empty.[/]");
                 return (int)ExitCodes.Error;
@@ -28,11 +30,11 @@ public abstract class DslCommand<TSettings> : Command<TSettings>
 
             var tokens = ExpressionTokenizer.TryTokenize(dsl);
 
-            if (!tokens.HasValue)
+            if(!tokens.HasValue)
             {
                 WriteSyntaxError(dsl, tokens.ToString(), tokens.ErrorPosition);
             }
-            else if (!ExpressionParser.TryParse(tokens.Value, out var expr, out var error, out var errorPosition))
+            else if(!ExpressionParser.TryParse(tokens.Value, out var expr, out var error, out var errorPosition))
             {
                 WriteSyntaxError(dsl, error, errorPosition);
             }
@@ -43,21 +45,19 @@ public abstract class DslCommand<TSettings> : Command<TSettings>
                 return (int)ExitCodes.Success;
             }
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             AnsiConsole.WriteException(e);
         }
-        
+
         return (int)ExitCodes.Error;
     }
 
     protected abstract void Process(CodeElement system);
 
-    protected TSettings Settings { get; private set; } = default!;
-
-    static void WriteSyntaxError(string dsl, string message, Position errorPosition)
+    private static void WriteSyntaxError(string dsl, string message, Position errorPosition)
     {
-        if (!errorPosition.HasValue)
+        if(!errorPosition.HasValue)
         {
             return;
         }
@@ -65,7 +65,7 @@ public abstract class DslCommand<TSettings> : Command<TSettings>
         var dslByLine = dsl.Split(Environment.NewLine);
         var zeroBasedErrorLine = errorPosition.Line - 1;
 
-        if (zeroBasedErrorLine == 0)
+        if(zeroBasedErrorLine == 0)
         {
             AnsiConsole.WriteLine(dslByLine[0]);
         }
@@ -75,7 +75,7 @@ public abstract class DslCommand<TSettings> : Command<TSettings>
             AnsiConsole.WriteLine(dslByLine[zeroBasedErrorLine - 1]);
             AnsiConsole.WriteLine(dslByLine[zeroBasedErrorLine]);
         }
-        
+
         AnsiConsole.WriteLine(new string(' ', errorPosition.Column - 1) + '^');
         AnsiConsole.MarkupLine($"[yellow]{message}[/]");
     }

@@ -10,13 +10,14 @@ public class ServiceMethod : CodeElement
         Name = name;
         ReturnType = returnType;
     }
-    
-    public string Name { get; }
+
     public string ReturnType { get; }
+
+    public string Name { get; }
 }
 
 [DebuggerDisplay("Service: {Name}")]
-public class ServiceListing  : BaseHierarchicalCodeElement
+public class ServiceListing : BaseHierarchicalCodeElement
 {
     public ServiceListing(string name) : base(name)
     {

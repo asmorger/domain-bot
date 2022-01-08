@@ -15,11 +15,8 @@ public class MermaidErDiagramGenerator : DiagramGenerator
             let properties = entity.GetProperties().Select(x => new Property(x.Type, x.Name))
             let relationships = entity.GetRelationships().Select(x => new Relationship(GetRelationshipSymbol(x.Type), x.Name))
             select new Entity(entity.Name, properties, relationships);
-        
-        var opts = new
-        {
-            entities = input
-        };
+
+        var opts = new {entities = input};
 
         return Template.Value.Render(opts);
     }
@@ -48,6 +45,8 @@ public class MermaidErDiagramGenerator : DiagramGenerator
     };
 
     private record Entity(string Name, IEnumerable<Property> Properties, IEnumerable<Relationship> Relationships);
+
     private record Property(string Type, string Name);
+
     private record Relationship(string Symbol, string Target);
 }

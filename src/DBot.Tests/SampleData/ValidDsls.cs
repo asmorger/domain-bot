@@ -10,7 +10,7 @@ public class ValidDsls : DataAttribute
 {
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        foreach (var file in GetFileContent())
+        foreach(var file in GetFileContent())
         {
             yield return new object[] {file};
         }
@@ -27,7 +27,7 @@ public class ValidDsls : DataAttribute
     {
         var assembly = Assembly.GetExecutingAssembly();
         var targetItem = assembly.GetManifestResourceNames().First(x => x.EndsWith(fileName));
-        
+
         var stream = assembly.GetManifestResourceStream(targetItem)!;
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();

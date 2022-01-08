@@ -3,6 +3,7 @@ using Superpower;
 using Superpower.Parsers;
 
 namespace DBot.Dsl.Parsing.Parsers;
+
 using ExpressionTokenParser = TokenListParser<ExpressionToken, Expression>;
 
 public static class UniversalParsers
@@ -22,9 +23,9 @@ public static class UniversalParsers
             .Or(Token.EqualTo(ExpressionToken.System))
             .Or(Token.EqualTo(ExpressionToken.ValueObject))
             .Apply(ExpressionTextParsers.Keyword)
-            .Select(id => (Expression) new KeywordValue(id));
+            .Select(id => (Expression)new KeywordValue(id));
 
     public static ExpressionTokenParser String { get; } =
-        Token.EqualTo(ExpressionToken.String).Select(x => (Expression) new NameValue(x.ToStringValue().Trim('"')))
-            .Or(Token.EqualTo(ExpressionToken.None).Select(_ => (Expression) new NameValue("none")));
+        Token.EqualTo(ExpressionToken.String).Select(x => (Expression)new NameValue(x.ToStringValue().Trim('"')))
+            .Or(Token.EqualTo(ExpressionToken.None).Select(_ => (Expression)new NameValue("none")));
 }

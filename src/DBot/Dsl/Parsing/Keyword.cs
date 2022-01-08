@@ -21,6 +21,7 @@ public enum Keyword
     System,
     ValueObject
 }
+
 public static class ExpressionTextParsers
 {
     public static TextParser<Keyword> Keyword { get; } =

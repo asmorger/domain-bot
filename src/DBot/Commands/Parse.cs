@@ -10,9 +10,9 @@ public class Parse : DslCommand<SourceFileSettings>
     {
         var tree = new Tree(system.Name);
 
-        if (system is HierarchicalCodeElement parent)
+        if(system is HierarchicalCodeElement parent)
         {
-            foreach (var element in parent)
+            foreach(var element in parent)
             {
                 tree.AddNode(BuildNode(element));
             }
@@ -21,18 +21,18 @@ public class Parse : DslCommand<SourceFileSettings>
         {
             tree.AddNode(BuildNode(system));
         }
-        
+
         AnsiConsole.Write(tree);
     }
-    
+
     private TreeNode BuildNode(CodeElement element)
     {
         var color = GetColor(element);
         var node = new TreeNode(new Markup($"[{color}]{element.Name.EscapeMarkup()}[/]"));
 
-        if (element is HierarchicalCodeElement current)
+        if(element is HierarchicalCodeElement current)
         {
-            foreach (var item in current)
+            foreach(var item in current)
             {
                 var node2 = BuildNode(item);
                 node.AddNode(node2);
