@@ -1,18 +1,18 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DBot.Dsl.Expressions;
 using DBot.Dsl.Parsing.Parsers;
-using Superpower;
 using Superpower.Model;
-using Superpower.Parsers;
 using ExpressionTokenParser = Superpower.TokenListParser<DBot.Dsl.Parsing.ExpressionToken, DBot.Dsl.Expressions.Expression>;
 
 namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser
 {
+    private static readonly ExpressionTokenParser DslValue = Dsl.Named("DSL value");
+
     private static ExpressionTokenParser Array { get; } =
         from begin in Token.EqualTo(ExpressionToken.LBracket)
-        from values in Parse.Ref(() => DslValue!)
+        from values in Parse.Ref(() => Dsl!)
             .ManyDelimitedBy(Token.EqualTo(ExpressionToken.Comma),
                 Token.EqualTo(ExpressionToken.RBracket))
         select (Expression)new ChildNodes(values);
@@ -32,7 +32,7 @@ public static class ExpressionParser
         from value in UniversalParsers.String
         select (Expression)new CoupletValue(new KeywordValue(Keyword.Description), new[] {value});
 
-    private static ExpressionTokenParser DslValue { get; } =
+    private static ExpressionTokenParser Dsl { get; } =
         Events
             .Or(Description)
             .Or(PropertiesParsers.Properties)
@@ -42,8 +42,7 @@ public static class ExpressionParser
             .Or(CodeElementKeyword)
             .Or(UniversalParsers.String);
 
-    private static readonly ExpressionTokenParser Expression = DslValue.Named("DSL value");
-    private static ExpressionTokenParser Source { get; } = Expression.AtEnd();
+    private static ExpressionTokenParser Source { get; } = DslValue.AtEnd();
 
     public static bool TryParse(TokenList<ExpressionToken> tokens, [NotNullWhen(true)] out Expression? expr,
         [NotNullWhen(false)] out string? error, out Position errorPosition)

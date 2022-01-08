@@ -1,6 +1,4 @@
 ﻿using DBot.Commands.Common;
-using Dbot.Domain;
-using Spectre.Console;
 
 namespace DBot.Commands;
 

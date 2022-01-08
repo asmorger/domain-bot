@@ -1,8 +1,5 @@
-﻿using Dbot.Domain;
-using DBot.Dsl.Evaluation;
+﻿using DBot.Dsl.Evaluation;
 using DBot.Dsl.Parsing;
-using Spectre.Console;
-using Spectre.Console.Cli;
 using Superpower.Model;
 
 #pragma warning disable CS8765

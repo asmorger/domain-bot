@@ -1,6 +1,4 @@
-﻿using Dbot.Domain;
-using Dbot.Domain.Analyzers;
-using Scriban;
+﻿using Scriban;
 
 namespace DBot.Commands.Diagrams.Generators.EntityRelationships;
 

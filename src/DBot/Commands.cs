@@ -1,6 +1,5 @@
 ﻿using DBot.Commands;
 using DBot.Commands.Diagrams;
-using Spectre.Console.Cli;
 
 namespace DBot;
 

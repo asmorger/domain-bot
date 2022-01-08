@@ -1,6 +1,4 @@
 ﻿using DBot.Dsl.Expressions;
-using Superpower;
-using Superpower.Parsers;
 
 namespace DBot.Dsl.Parsing.Parsers;
 

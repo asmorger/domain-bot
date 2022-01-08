@@ -1,4 +1,6 @@
-﻿namespace Dbot.Domain.Analyzers;
+﻿using System.Collections.Generic;
+
+namespace Dbot.Domain.Analyzers;
 
 public static class SystemAnalyzer
 {

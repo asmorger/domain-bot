@@ -1,4 +1,6 @@
-﻿namespace Dbot.Domain;
+﻿using System.Collections.Generic;
+
+namespace Dbot.Domain;
 
 public interface CodeElement
 {
