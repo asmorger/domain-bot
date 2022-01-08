@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:Version=${{env.VERSION}}
       - name: Test
-        run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
+        run: dotnet test ./src/DBot.sln --no-build --logger trx --results-directory "TestResults"
       - name: Upload Test Results
         uses: actions/upload-artifact@v2
         with:
