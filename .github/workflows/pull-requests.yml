@@ -18,10 +18,17 @@ jobs:
         name: Install .Net Core 6
         with:
           dotnet-version: '6.x.x'
+      - name: Set Timezone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "America/Chicago"
+      - name: Set version
+        run: |
+          echo "VERSION=$(date +'%Y.%m.%d').${{github.run_number}}" >> $GITHUB_ENV
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore --version ${VERSION}
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Upload Test Results
