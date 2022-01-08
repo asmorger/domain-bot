@@ -33,8 +33,20 @@ jobs:
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Pack
-        if: startsWith(github.ref, 'refs/heads/release')
+        if: startsWith(github.ref, 'refs/heads/main')
         run: dotnet pack ./src/DBot.sln
       - name: Publish
-        if: startsWith(github.ref, 'refs/heads/release')
+        if: startsWith(github.ref, 'refs/heads/main')
         run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} 
+      - name: Release
+        uses: actions/create-release@v1
+        id: create_release
+        if: startsWith(github.ref, 'refs/heads/main')
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ env.VERSION }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
