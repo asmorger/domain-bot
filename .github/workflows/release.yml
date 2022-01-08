@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:VersionPrefix=${{env.VERSION}}
       - name: Test
-        run: dotnet test ./src/DBot.sln --no-build --logger trx --results-directory "TestResults"
+        run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Pack
         run: dotnet pack ./src/DBot.sln
       - name: Publish
