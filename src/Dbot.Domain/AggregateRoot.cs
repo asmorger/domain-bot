@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace DBot.Domain;
+namespace Dbot.Domain;
 
 [DebuggerDisplay("Aggregate: {Name}")]
 public class AggregateRoot : Entity

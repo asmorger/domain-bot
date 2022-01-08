@@ -1,5 +1,5 @@
-﻿using DBot.Analyzers;
-using DBot.Domain;
+﻿using Dbot.Domain;
+using Dbot.Domain.Analyzers;
 using Scriban;
 
 namespace DBot.Commands.Diagrams.Generators.EntityRelationships;
@@ -37,10 +37,10 @@ public class MermaidErDiagramGenerator : DiagramGenerator
 {{~ end ~}}
 ";
 
-    private static string GetRelationshipSymbol(Domain.Relationship.RelationshipType type) => type switch
+    private static string GetRelationshipSymbol(Dbot.Domain.Relationship.RelationshipType type) => type switch
     {
-        Domain.Relationship.RelationshipType.OneToMany => "||--o{",
-        Domain.Relationship.RelationshipType.OneToOne => "||--||",
+        Dbot.Domain.Relationship.RelationshipType.OneToMany => "||--o{",
+        Dbot.Domain.Relationship.RelationshipType.OneToOne => "||--||",
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
     };
 

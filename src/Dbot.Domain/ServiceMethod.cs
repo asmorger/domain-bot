@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace DBot.Domain;
+namespace Dbot.Domain;
 
 [DebuggerDisplay("Service Method: {Name}")]
 public class ServiceMethod : CodeElement

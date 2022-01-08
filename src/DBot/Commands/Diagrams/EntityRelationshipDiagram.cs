@@ -1,6 +1,6 @@
 ﻿using DBot.Commands.Common;
 using DBot.Commands.Diagrams.Generators.EntityRelationships;
-using DBot.Domain;
+using Dbot.Domain;
 
 namespace DBot.Commands.Diagrams;
 

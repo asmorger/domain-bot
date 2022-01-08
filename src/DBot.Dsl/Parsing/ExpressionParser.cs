@@ -6,7 +6,6 @@ using Superpower.Model;
 using Superpower.Parsers;
 using ExpressionTokenParser = Superpower.TokenListParser<DBot.Dsl.Parsing.ExpressionToken, DBot.Dsl.Expressions.Expression>;
 
-
 namespace DBot.Dsl.Parsing;
 
 public static class ExpressionParser

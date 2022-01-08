@@ -1,4 +1,4 @@
-﻿using DBot.Domain;
+﻿using Dbot.Domain;
 using DBot.Dsl.Evaluation;
 using DBot.Dsl.Parsing;
 using Spectre.Console;

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace DBot.Domain;
+namespace Dbot.Domain;
 
 public abstract class BaseHierarchicalCodeElement : HierarchicalCodeElement
 {

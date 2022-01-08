@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace DBot.Domain;
+namespace Dbot.Domain;
 
 [DebuggerDisplay("Projection: {Name}")]
 public class Projection : BaseHierarchicalCodeElement

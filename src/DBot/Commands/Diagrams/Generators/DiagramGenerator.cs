@@ -1,4 +1,4 @@
-﻿using DBot.Domain;
+﻿using Dbot.Domain;
 
 namespace DBot.Commands.Diagrams.Generators;
 

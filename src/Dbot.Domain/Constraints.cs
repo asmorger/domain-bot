@@ -1,4 +1,4 @@
-﻿namespace DBot.Domain;
+﻿namespace Dbot.Domain;
 
 public interface CodeElement
 {

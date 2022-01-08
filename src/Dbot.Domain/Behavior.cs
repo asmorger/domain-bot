@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace DBot.Domain;
+namespace Dbot.Domain;
 
 [DebuggerDisplay("Behavior: {Name} raises {EventToBeRaised}")]
 public class Behavior : CodeElement

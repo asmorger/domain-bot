@@ -1,5 +1,5 @@
 ﻿using DBot.Commands.Common;
-using DBot.Domain;
+using Dbot.Domain;
 using Spectre.Console;
 
 namespace DBot.Commands;

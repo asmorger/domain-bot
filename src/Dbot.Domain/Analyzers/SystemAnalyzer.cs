@@ -1,6 +1,4 @@
-﻿using DBot.Domain;
-
-namespace DBot.Analyzers;
+﻿namespace Dbot.Domain.Analyzers;
 
 public static class SystemAnalyzer
 {

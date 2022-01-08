@@ -1,4 +1,4 @@
-﻿using DBot.Domain;
+﻿using Dbot.Domain;
 using DBot.Dsl.Parsing;
 
 namespace DBot.Dsl.Expressions;
