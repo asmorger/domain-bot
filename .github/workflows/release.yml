@@ -33,6 +33,6 @@ jobs:
       - name: Test
         run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
       - name: Pack
-        run: dotnet pack ./src/DBot.sln
+        run: dotnet pack ./src/DBot.sln --version-suffix -beta
       - name: Publish
-        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} --version-suffix -beta
+        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} 
