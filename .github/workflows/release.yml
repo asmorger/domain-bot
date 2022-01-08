@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nuget
-          path: src/DBot/bin/Release/DomainBot-${{env.VERSION}}.nupkg
+          path: src/DBot/bin/Release/DomainBot.${{env.VERSION}}.nupkg
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
       - name: Publish
