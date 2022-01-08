@@ -40,7 +40,7 @@ jobs:
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
       - name: Pack
-        run: dotnet pack ./src/DBot.sln
+        run: dotnet pack ./src/DBot.sln --configuration Release
       - name: Upload nuget artifact
         uses: actions/upload-artifact@v2
         with:
