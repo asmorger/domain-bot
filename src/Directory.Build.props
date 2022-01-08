@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>Andrew Morger</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/*.verified.*;**/*.received.*</DefaultItemExcludes>
+  </PropertyGroup>
+</Project>
