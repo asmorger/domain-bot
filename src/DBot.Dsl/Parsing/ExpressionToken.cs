@@ -10,6 +10,7 @@ public enum ExpressionToken
     [Token(Category = "keyword")] Behavior,
     [Token(Category = "keyword")] Description,
     [Token(Category = "keyword")] Entity,
+    [Token(Category = "keyword")] Enum,
     [Token(Category = "keyword")] Events,
     [Token(Category = "keyword")] None,
     [Token(Example = "->")] OneToManyRelationship,

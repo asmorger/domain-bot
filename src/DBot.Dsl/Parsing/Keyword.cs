@@ -6,6 +6,7 @@ public enum Keyword
     Behaviors,
     Description,
     Entity,
+    Enum,
     Events,
     None,
     Projection,
@@ -26,6 +27,7 @@ public static class ExpressionTextParsers
             .Or(Span.EqualTo("description").Value(Parsing.Keyword.Description))
             .Try().Or(Span.EqualTo("dto").Value(Parsing.Keyword.Projection))
             .Or(Span.EqualTo("entity").Value(Parsing.Keyword.Entity))
+            .Try().Or(Span.EqualTo("enum").Value(Parsing.Keyword.Enum))
             .Try().Or(Span.EqualTo("events").Value(Parsing.Keyword.Events))
             .Or(Span.EqualTo("none").Value(Parsing.Keyword.None))
             .Or(Span.EqualTo("projection").Value(Parsing.Keyword.Projection))
@@ -45,6 +47,7 @@ public static class ExpressionTextParsers
             .Match(Span.EqualTo("description"), ExpressionToken.Description)
             .Match(Span.EqualTo("dto"), ExpressionToken.Projection)
             .Match(Span.EqualTo("entity"), ExpressionToken.Entity)
+            .Match(Span.EqualTo("enum"), ExpressionToken.Enum)
             .Match(Span.EqualTo("events"), ExpressionToken.Events)
             .Match(Span.EqualTo("none"), ExpressionToken.None)
             .Match(Span.EqualTo("projection"), ExpressionToken.Projection)

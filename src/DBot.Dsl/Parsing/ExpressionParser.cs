@@ -19,6 +19,11 @@ public static class ExpressionParser
             (name, identifier, array) =>
                 new TripletValue((KeywordValue)identifier, (NameValue)name, ((ChildNodes)array).Children));
 
+    private static ExpressionTokenParser Enums { get; } =
+        from keyword in Token.EqualTo(ExpressionToken.Enum)
+        from array in Array
+        select (Expression)new CoupletValue(new KeywordValue(Keyword.Enum), ((ChildNodes)array).Children);
+
     private static ExpressionTokenParser Events { get; } =
         from keyword in Token.EqualTo(ExpressionToken.Events)
         from array in Array
@@ -32,6 +37,7 @@ public static class ExpressionParser
     private static ExpressionTokenParser Dsl { get; } =
         Events
             .Or(Description)
+            .Or(Enums)
             .Or(PropertiesParsers.Properties)
             .Or(BehaviorsParsers.Behaviors)
             .Or(ServicesParsers.Services)
