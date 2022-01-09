@@ -31,6 +31,12 @@ public static class ExpressionEvaluator
             return node;
         }
 
+        // if we pre-populate the listing, don't evaluate the children independently
+        if(parent.Any())
+        {
+            return node;
+        }
+
         foreach(var child in expressionWithChildren.Children)
         {
             var childNode = EvaluateCodeHierarchy(child);
@@ -47,7 +53,6 @@ public static class ExpressionEvaluator
             Keyword.Behaviors => new BehaviorListing(v.Children.Cast<RaisesValue>()
                 .Select(x => new Behavior(x.BehaviorName.ToString()!, x.EventName.ToString()!))),
             Keyword.Events => new EventListing(v.Children.Select(x => new Event(x.ToString()!))),
-            Keyword.Enum => new EnumListing(v.Children.Select(x => new Dbot.Domain.Enum(x.ToString()!))),
             Keyword.Description => new Description(v.Children.First().ToString()!),
             Keyword.Structure => new PropertyListing(v.Children.Cast<PropertyValue>().Select(x => new Property(x.Type.ToString()!, x.Name.ToString()!))),
             Keyword.Relationships => new RelationshipListing(v.Children.Cast<RelationshipValue>().Select(x => new Relationship(x.Type, x.Target.ToString()!))),
@@ -58,6 +63,7 @@ public static class ExpressionEvaluator
             Keyword.System => new SoftwareSystem(v.Name.Value),
             Keyword.AggregateRoot => new AggregateRoot(v.Name.Value),
             Keyword.Entity => new Entity(v.Name.Value),
+            Keyword.Enum => new EnumListing(v.Name.Value, v.Children.Select(x => new EnumValue(x.ToString()!))),
             Keyword.Projection => new Projection(v.Name.Value),
             Keyword.Service => new ServiceListing(v.Name.Value),
             Keyword.ValueObject => new ValueObject(v.Name.Value),

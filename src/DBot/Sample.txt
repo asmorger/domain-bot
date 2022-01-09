@@ -3,7 +3,7 @@
 # I actually really like this as a sample; it was written by a student with a good grasp of the fundamentals, and who followed patterns well.
 # It's also only partially event-sourced, so we can demonstrate how to handle some edge cases in the language usage,
 # as well as providing some good opportunities for analysis.
-# 
+#
 # I also actually like the fact that it has some organization issues - some common items aren't broken out, some entities seem strangely nested, etc.
 # While that's not ideal or what one wants to see in a classroom setting, the reality is that it happens all the time in production code bases.
 # Again, this is a great opportunity for analysis.
@@ -18,7 +18,7 @@ system "Contoso University" {
             MoneyValue Budget,
             DateTime StartDate
         },
-        
+
         relationships {
             -> Course
         },
@@ -26,7 +26,7 @@ system "Contoso University" {
         events {
             AdministratorAssignedDomainEvent,
             DepartmentCreatedDomainEvent
-        }, 
+        },
 
         behaviors {
             AddCourse raises CourseAddedDomainEvent,
@@ -49,7 +49,7 @@ system "Contoso University" {
                 string Title,
                 string Credits
             },
-            
+
             relationships {
                 -| EnrollmentDto,
                 -| AssignmentDto
@@ -81,7 +81,7 @@ system "Contoso University" {
                 decimal Budget,
                 DateTime StartDate
             },
-            
+
             relationships {
                 -> CourseDto
             },
@@ -113,7 +113,7 @@ system "Contoso University" {
             DateTime HireDate,
             OfficeLocation OfficeLocation
         },
-        
+
         relationships {
             -> Assignment
         },
@@ -158,7 +158,7 @@ system "Contoso University" {
                 string LastName,
                 DateTime HireDate
             },
-            
+
             relationships {
                 -> InstructorCourseDto
             },
@@ -178,7 +178,7 @@ system "Contoso University" {
             DateTime EnrollmentDate,
             DateTime CreateDate
         },
-        
+
         relationships {
             -> Enrollment
         },
@@ -193,20 +193,18 @@ system "Contoso University" {
             structure {
                 Grade Grade
             },
-            
+
             relationships {
                -| Course
             }
         },
 
-        value Grade {
-            structure {
-                Grade A,
-                Grade B,
-                Grade C,
-                Grade D,
-                Grade F
-            }
+        enum Grade {
+            A,
+            B,
+            C,
+            D,
+            F
         },
 
         behaviors {
@@ -224,7 +222,7 @@ system "Contoso University" {
                 string LastName,
                 DateTime EnrollmentDate
             },
-            
+
             relationships {
                 -> StudentEnrollmentDto
             },
@@ -239,14 +237,14 @@ system "Contoso University" {
         }
     },
 
-    value MoneyValue { 
+    value MoneyValue {
         structure {
             decimal Value,
             string Currency,
             DateTime Moment
         }
     },
-    value PersonName { 
+    value PersonName {
         structure {
             string First,
             string Last,
