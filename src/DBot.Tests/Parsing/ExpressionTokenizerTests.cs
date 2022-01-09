@@ -13,7 +13,7 @@ public class ExpressionTokenizerTests
         result.HasValue.Should().BeTrue();
         result.Value.Should().HaveCount(4);
     }
-    
+
     [Fact]
     public void Complex_system_definition_parses_succesfully()
     {

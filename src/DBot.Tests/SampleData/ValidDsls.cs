@@ -10,7 +10,7 @@ public class ValidDsls : DataAttribute
 {
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        foreach (var file in GetFileContent())
+        foreach(var file in GetFileContent())
         {
             yield return new object[] {file};
         }
@@ -18,16 +18,16 @@ public class ValidDsls : DataAttribute
 
     private IEnumerable<string> GetFileContent()
     {
-        yield return ReadEmbeddedFile("EmptySystem.txt");
-        yield return ReadEmbeddedFile("SimpleSystem.txt");
-        yield return ReadEmbeddedFile("ComplexSystem.txt");
+        yield return "EmptySystem.txt";
+        yield return "SimpleSystem.txt";
+        yield return "ComplexSystem.txt";
     }
 
-    private string ReadEmbeddedFile(string fileName)
+    public static string ReadEmbeddedFile(string fileName)
     {
         var assembly = Assembly.GetExecutingAssembly();
         var targetItem = assembly.GetManifestResourceNames().First(x => x.EndsWith(fileName));
-        
+
         var stream = assembly.GetManifestResourceStream(targetItem)!;
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();

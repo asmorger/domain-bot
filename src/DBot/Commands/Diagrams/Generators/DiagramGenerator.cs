@@ -1,6 +1,4 @@
-﻿using DBot.Domain;
-
-namespace DBot.Commands.Diagrams.Generators;
+﻿namespace DBot.Commands.Diagrams.Generators;
 
 public interface DiagramGenerator
 {

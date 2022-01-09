@@ -1,5 +1,4 @@
-﻿using Spectre.Console;
-using Spectre.Console.Cli;
+﻿using System.IO;
 
 namespace DBot.Commands.Common;
 
