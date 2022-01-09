@@ -1,52 +1,58 @@
-system GizmoMaker { 
+system GizmoMaker {
     description "A sample software system",
-    
+
     aggregate Whatzit {
         description "The best selling thing ever!",
-        
+
         structure {
             string Name,
             int ItemCount
         },
-        
+
         relationships {
             -> Whozit,
             -> Thingamajig,
             -| Dohicky
         },
-        
+
         behaviors {
             Rename raises WhatzitNameChanged,
             CreateWhozit raises WhozitCreated
         },
-        
+
         service WhatzitService {
             GetByName returns Whatzit,
             GetById => Whatzit
         },
-        
+
         projection WhatzitDto {
             structure {
                 string Name,
                 int ItemCount
             }
         },
-        
+
+        enum ApplicationType {
+            Sticker,
+            Banner,
+            Sign
+        },
+
         dto WhatzitDto2 {
             structure {
                 string Name,
                 int ItemCount
             }
         },
-        
+
         entity Whozit {
             description "It has a face!",
-            
+
             structure {
                 string Name,
                 string ModeledAfter
             },
-            
+
             events {
                 WhozitCreated,
                 WhozitRenamed,
@@ -54,13 +60,13 @@ system GizmoMaker {
             }
         },
         entity Thingamajig { },
-        
+
         events {
             WhatzitCreated,
             WhatzitNameChanged,
             WhatzitDeleted
         }
     },
-    
+
     value Dohickey { }
 }
