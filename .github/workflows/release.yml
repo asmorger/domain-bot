@@ -29,16 +29,11 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./src/DBot.sln
       - name: Build
-        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:Version=${{env.VERSION}}
+        run: dotnet build ./src/DBot.sln --configuration Release --no-restore -p:Version=${{env.VERSION}} -p:ContinuousIntegrationBuild=true
       - name: Test
-        run: dotnet test ./src/DBot.sln --logger trx --results-directory "TestResults"
+        run: dotnet test ./src/DBot.sln --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
       - name: Upload test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: dotnet-results
-          path: TestResults
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+        uses: codecov/codecov-action@v1
       - name: Pack
         run: dotnet pack ./src/DBot.sln --configuration Release
       - name: Upload nuget artifact
