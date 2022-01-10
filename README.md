@@ -4,6 +4,10 @@
 >
 > This is all very much in the exploratory stages and is not at all anywhere close to complete. Active development is underway and things will change. You have been warned.
 
+![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/DomainBot)
+[![codecov](https://codecov.io/gh/asmorger/domain-bot/branch/main/graph/badge.svg?token=ANUUXITOHL)](https://codecov.io/gh/asmorger/domain-bot)
+![GitHub](https://img.shields.io/github/license/asmorger/domain-bot)
+
 A [domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) [domain specific language](https://en.wikipedia.org/wiki/Domain-specific_language)
 based upon [Superpower](https://github.com/datalust/superpower).  **Domain Bot (d-bot)** enables a text-driven approach
 to DDD modeling with tooling to support model validation, documentation generation, dependency graphing, and more (all
